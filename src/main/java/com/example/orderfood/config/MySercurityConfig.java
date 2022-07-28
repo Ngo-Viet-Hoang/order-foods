@@ -34,7 +34,7 @@ public class MySercurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("api/v1/user/*").hasAnyAuthority("USER","ADMIN");
         http.authorizeRequests().antMatchers("api/v1/foods/*").hasAnyAuthority("ADMIN","USER");
         http.authorizeRequests().antMatchers("api/v1/categories/*").hasAnyAuthority("ADMIN","USER");
-        http.authorizeRequests().antMatchers("api/v1/admin/*").hasAnyAuthority("ADMIN");
+        http.authorizeRequests().antMatchers("api/v1/admin/*").hasAnyAuthority("ADMIN","USER");
         http.addFilterBefore(
                 new MyAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

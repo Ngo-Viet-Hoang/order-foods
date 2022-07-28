@@ -20,21 +20,14 @@ import java.util.Optional;
 @Slf4j
 public class CategoryController {
     final CategoryService categoryService;
-    @RequestMapping(path = "/create", method = RequestMethod.GET)
-    public String createFood(Model model){
-        model.addAttribute("food",new Category());
-        return "view/categories/create";
-    }
+//    @RequestMapping(path = "/create", method = RequestMethod.GET)
+//    public String createCategory(Model model){
+//        model.addAttribute("food",new Category());
+//        return "view/categories/create";
+//    }
     @RequestMapping(path = "/create", method = RequestMethod.POST)
-    public ResponseEntity<?> processSaveFood(@Valid @ModelAttribute("food") Category category,
-                                  BindingResult bindingResult,
-                                  Model model){
-        if(bindingResult.hasErrors()){
-            model.addAttribute("category",category);
-            return ResponseEntity.badRequest().build();
-        }
-        categoryService.save(category);
-        return ResponseEntity.ok(category);
+    public ResponseEntity<?> processSaveCategory(@RequestBody Category category){
+        return ResponseEntity.ok(categoryService.save(category));
     }
     @RequestMapping(method = RequestMethod.GET, path = "{id}")
     public ResponseEntity<?> getDetail(@PathVariable Long id) {

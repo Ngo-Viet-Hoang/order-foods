@@ -38,7 +38,7 @@ class FoodServiceTest {
     @Test
     public void testFood() {
 
-        Optional<Category> category = Optional.of(categoryRepository.findById(11L).get());
+        Optional<Category> category = Optional.of(categoryRepository.findById(1L).get());
 
         Food food1 = Food.builder()
                 .id(UUID.randomUUID().toString())
@@ -49,6 +49,7 @@ class FoodServiceTest {
                 .description("hello")
                 .status(FoodStatus.SALE)
                 .category(category.get())
+                .mealTime(LocalDateTime.now())
                 .build();
         foodRepository.save(food1);
 

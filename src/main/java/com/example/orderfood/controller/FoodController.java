@@ -25,11 +25,6 @@ public class FoodController {
     @Autowired
     CategoryRepository categoryRepository;
 
-    //    @RequestMapping(path = "/create", method = RequestMethod.GET)
-//    public String createFood(Model model){
-//        model.addAttribute("food",new Food());
-//        return "view/foods/create";
-//    }
     @RequestMapping(method = RequestMethod.GET, path = "{id}")
     public ResponseEntity<?> getDetail(@PathVariable String id) {
         Optional<Food> optionalFood = foodService.findById(id);
@@ -48,17 +43,6 @@ public class FoodController {
 
         return ResponseEntity.ok(foodService.save(food));
     }
-//    @RequestMapping(path = "/create", method = RequestMethod.POST)
-//    public String processSaveFood(@Valid @ModelAttribute("food") Food food,
-//                                  BindingResult bindingResult,
-//                                  Model model) {
-//        if (bindingResult.hasErrors()) {
-//            model.addAttribute("food", food);
-//            return "view/foods/create";
-//        }
-//        foodService.save(food);
-//        return "redirect:/admin/foods/create";
-//    }
 
     @RequestMapping(path = "/list",method = RequestMethod.GET)
     public ResponseEntity<?> findAll(@RequestParam(value = "page", defaultValue = "1") int page,
@@ -75,12 +59,17 @@ public class FoodController {
         }
         Food existFood = optionalFood.get();
         existFood.setName(food.getName());
+        existFood.setSlug(food.getSlug());
+        existFood.setImage(food.getImage());
+        existFood.setPrice(food.getPrice());
+        existFood.setDescription(food.getDescription());
         existFood.setStatus(FoodStatus.SALE);
-        existFood.setCreatedBy(food.getCreatedBy());
-        existFood.setUpdatedBy(food.getUpdatedBy());
-        existFood.setDeletedBy(food.getDeletedBy());
-        existFood.setDeletedAt(LocalDateTime.now());
-        existFood.setUpdatedAt(LocalDateTime.now());
+        existFood.setMealTime(food.getMealTime());
+//        existFood.setCreatedBy(food.getCreatedBy());
+//        existFood.setUpdatedBy(food.getUpdatedBy());
+//        existFood.setDeletedBy(food.getDeletedBy());
+//        existFood.setDeletedAt(LocalDateTime.now());
+//        existFood.setUpdatedAt(LocalDateTime.now());
         return ResponseEntity.ok(foodService.save(existFood));
     }
 
@@ -94,7 +83,7 @@ public class FoodController {
         // map object
         existFood.setName(food.getName());
         existFood.setStatus(FoodStatus.STOP);
-        existFood.setUpdatedAt(LocalDateTime.now());
+//        existFood.setUpdatedAt(LocalDateTime.now());
         return ResponseEntity.ok(foodService.save(existFood));
     }
     @RequestMapping(method = RequestMethod.DELETE, path = "{id}")

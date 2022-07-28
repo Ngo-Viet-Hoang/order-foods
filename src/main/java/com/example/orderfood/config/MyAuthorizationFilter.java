@@ -40,7 +40,5 @@ public class MyAuthorizationFilter extends OncePerRequestFilter {
             ex.printStackTrace();
         }
         filterChain.doFilter(request,response);
-
-
     }
 }
