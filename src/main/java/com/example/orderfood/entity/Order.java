@@ -21,7 +21,9 @@ import java.util.Set;
 public class Order extends BaseEntity {
     @Id
     private String id;
-    private String userId;
+    @ManyToOne
+    @JoinColumn(name = "accountId")
+    private Account account;
     @CreatedDate
     private LocalDateTime createdAt;
     private BigDecimal totalPrice;

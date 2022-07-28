@@ -5,6 +5,7 @@ import com.example.orderfood.config.H2JpaConfig;
 import com.example.orderfood.entity.*;
 import com.example.orderfood.entity.dto.CartItemDTO;
 import com.example.orderfood.entity.dto.ShoppingCartDTO;
+import com.example.orderfood.repository.AccountRepository;
 import com.example.orderfood.repository.FoodRepository;
 import com.example.orderfood.repository.OrderRepository;
 import com.example.orderfood.repository.ShoppingCartRepository;
@@ -20,19 +21,21 @@ import java.math.BigDecimal;
 import java.util.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {OrderFoodApplication.class, H2JpaConfig.class})
-@ActiveProfiles("test")
+@SpringBootTest(classes = {OrderFoodApplication.class})
 public class OrderServiceTest {
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
     @Autowired
     private FoodRepository foodRepository;
-    private String foodId01 = "8455fbaf-46f7-4f41-ac57-39d3b502a2b7";
-    private String foodId02 = "a1a10b70-8016-48ca-a803-2983bb6cc828";
+    private String foodId01 = "6121929d-825d-4ec9-a818-556be65fdd3d";
+    private String foodId02 = "d7cfd53d-c2c5-41f9-a868-33b0874ce7ce";
 
 
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private AccountRepository accountRepository;
+
 
     @Before
     public void before() throws Exception {
@@ -42,7 +45,6 @@ public class OrderServiceTest {
         food1.setDescription("Helo");
         food1.setPrice(BigDecimal.valueOf(50));
         food1.setSlug("product-01");
-//        product1.setStatus(ProductSimpleStatus.ACTIVE);
        foodRepository.save(food1);
 
       Food food2 = new Food();
@@ -51,15 +53,25 @@ public class OrderServiceTest {
         food2.setDescription("Helo");
         food2.setPrice(BigDecimal.valueOf(50));
         food2.setSlug("product-02");
-//        product1.setStatus(ProductSimpleStatus.ACTIVE);
         foodRepository.save(food2);
+    }
+    @Test
+    public void getAccount(){
+        List<Account> accounts = accountRepository.findAll();
+        System.out.println(accounts.size());
+        if (accounts.size() == 0) {
+            System.out.println("0");
+        }
+        for (int i = 0; i < accounts.size(); i++) {
+            System.out.println("account: "+ accounts.get(i).getId());
+        }
     }
     @Test
     public void saveOrderSimple() {
         Order order = new Order();
         String orderId = UUID.randomUUID().toString();
         order.setId(orderId);
-        order.setUserId("1");
+        order.setAccount(accountRepository.findById((long)1).get());
         order.setTotalPrice(new BigDecimal(0));
 
         Set<OrderDetail> orderDetailSet = new HashSet<>();
@@ -112,7 +124,7 @@ public class OrderServiceTest {
                 .quantity(3)
                 .build();
         ShoppingCartDTO shoppingCartDTO = ShoppingCartDTO.builder()
-                .userId(userId)
+                .account(accountRepository.findById((long)1).get())
                 .phone("09123")
                 .note("Ko cay")
                 .customer("Hung")
@@ -128,6 +140,7 @@ public class OrderServiceTest {
                 .customer(shoppingCartDTO.getCustomer())
                 .note(shoppingCartDTO.getNote())
                 .phone(shoppingCartDTO.getPhone())
+                .account(shoppingCartDTO.getAccount())
                 .build();
         Set<CartItem> setCartItem = new HashSet<>();
         System.out.println(shoppingCart.getId());

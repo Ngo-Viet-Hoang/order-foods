@@ -1,6 +1,7 @@
 package com.example.orderfood.entity.dto;
 
 
+import com.example.orderfood.entity.Account;
 import com.example.orderfood.entity.ShoppingCart;
 import lombok.*;
 
@@ -14,7 +15,7 @@ import java.util.Set;
 @Builder
 public class ShoppingCartDTO {
     private String id;
-    private String userId; // ai tạo
+    private Account account;
     private BigDecimal totalPrice;
     private String customer;
     private String phone;

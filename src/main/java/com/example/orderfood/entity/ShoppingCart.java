@@ -17,7 +17,9 @@ public class ShoppingCart {
 
     @Id
     private String id;
-    private String userId;
+    @ManyToOne
+    @JoinColumn(name = "accountId")
+    private Account account;
     private BigDecimal totalPrice;
     private String customer;
     private String phone;

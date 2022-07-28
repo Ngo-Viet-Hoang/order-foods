@@ -1,10 +1,7 @@
 package com.example.orderfood.controller;
 
 
-import com.example.orderfood.entity.CartItem;
-import com.example.orderfood.entity.CartItemId;
-import com.example.orderfood.entity.Food;
-import com.example.orderfood.entity.ShoppingCart;
+import com.example.orderfood.entity.*;
 import com.example.orderfood.entity.dto.CartItemDTO;
 import com.example.orderfood.entity.dto.ShoppingCartDTO;
 import com.example.orderfood.repository.FoodRepository;
@@ -28,11 +25,11 @@ public class ShoppingCartController {
     FoodRepository foodRepository;
 
     @RequestMapping(method = RequestMethod.POST)
-    public void saveCart(@RequestParam String userId, @RequestBody ShoppingCartDTO shoppingCartDTO){
+    public void saveCart(@RequestBody Account account, @RequestBody ShoppingCartDTO shoppingCartDTO){
         boolean hasException = false;
         ShoppingCart shoppingCart = ShoppingCart.builder()
                 .id(UUID.randomUUID().toString())
-                .userId(userId)
+                .account(account)
                 .customer(shoppingCartDTO.getCustomer())
                 .note(shoppingCartDTO.getNote())
                 .phone(shoppingCartDTO.getPhone())
