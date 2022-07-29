@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
+@CrossOrigin("*")
 @RequestMapping(path = "/api/v1/foods")
 @Slf4j
 @RequiredArgsConstructor

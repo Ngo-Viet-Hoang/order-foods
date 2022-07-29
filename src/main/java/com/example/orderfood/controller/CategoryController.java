@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
+@CrossOrigin("*")
 @RequiredArgsConstructor
 @RequestMapping(path = "api/v1/categories")
 @Slf4j

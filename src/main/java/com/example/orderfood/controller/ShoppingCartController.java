@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping(path = "api/v1/shopping-carts")
 public class ShoppingCartController {
 
