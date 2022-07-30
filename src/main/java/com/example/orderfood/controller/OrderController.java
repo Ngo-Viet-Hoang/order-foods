@@ -44,12 +44,12 @@ public class OrderController {
             OrderSpecification filter = new OrderSpecification(searchCriteria);
             specification = specification.and(filter);
         }
-        if (userId != null) {
-            SearchCriteria searchCriteria
-                    = new SearchCriteria("userId", SearchCriteriaOperator.EQUALS, userId);
-            OrderSpecification filter = new OrderSpecification(searchCriteria);
-            specification = specification.and(filter);
-        }
+//        if (userId != null) {
+//            SearchCriteria searchCriteria
+//                    = new SearchCriteria("userId", SearchCriteriaOperator.EQUALS, userId);
+//            OrderSpecification filter = new OrderSpecification(searchCriteria);
+//            specification = specification.and(filter);
+//        }
         Page<Order> result = this.orderService.findAll(page, limit, specification);
         return ResponseEntity.ok().body(result);
     }
