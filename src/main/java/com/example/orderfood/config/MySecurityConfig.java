@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -14,7 +15,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @Slf4j
 @RequiredArgsConstructor
-public class MySercurityConfig extends WebSecurityConfigurerAdapter {
+@EnableWebSecurity
+public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     final AccountService accountService;
     final PasswordEncoder passwordEncoder;
 
@@ -33,7 +35,7 @@ public class MySercurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/v1/accounts/*").permitAll();
         http.authorizeRequests().antMatchers("api/v1/user/*").hasAnyAuthority("USER","ADMIN");
         http.authorizeRequests().antMatchers("api/v1/foods/*").hasAnyAuthority("ADMIN","USER");
-        http.authorizeRequests().antMatchers("api/v1/categories/*").hasAnyAuthority("ADMIN","USER");
+        http.authorizeRequests().antMatchers("api/v1/categories/*").hasAnyAuthority("ADMIN");
         http.authorizeRequests().antMatchers("api/v1/admin/*").hasAnyAuthority("ADMIN","USER");
         http.addFilterBefore(
                 new MyAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

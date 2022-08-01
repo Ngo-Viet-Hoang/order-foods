@@ -42,9 +42,9 @@ class FoodServiceTest {
 
         Food food1 = Food.builder()
                 .id(UUID.randomUUID().toString())
-                .name("com")
+                .name("com1234")
                 .slug("com")
-                .image("com.img")
+                .image("https://via.placeholder.com/150/92c952")
                 .price(BigDecimal.valueOf(12))
                 .description("hello")
                 .status(FoodStatus.SALE)

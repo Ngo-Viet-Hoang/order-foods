@@ -7,7 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 @Service
@@ -31,6 +35,13 @@ public class FoodService {
     }
     public void deleteById(String id) {
         foodRepository.deleteById(id);
+    }
+
+    public void saveImage(MultipartFile image) throws Exception{
+        String folder = "/photos/";
+        byte[] bytes =  image.getBytes();
+        Path path = Paths.get(folder + image.getOriginalFilename());
+        Files.write(path,bytes);
     }
 
 }

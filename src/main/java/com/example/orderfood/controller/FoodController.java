@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -94,6 +95,19 @@ public class FoodController {
         }
         foodService.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+    @PostMapping("/uploadImage")
+    public String uploadImage(@RequestParam("image") MultipartFile image){
+        String returnValue = "";
+        try {
+            foodService.saveImage(image);
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error("Error saving photo",e);
+            returnValue = "error";
+        }
+
+        return returnValue;
     }
 
 }

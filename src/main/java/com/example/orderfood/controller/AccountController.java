@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AccountController {
     final AccountService accountService;
     @RequestMapping(path = "register", method = RequestMethod.POST)
-    public ResponseEntity<?> register(@RequestBody AccountRegisterDto accoutRegisterDto){
-        return ResponseEntity.ok(accountService.register(accoutRegisterDto));
+    public ResponseEntity<?> register(@RequestBody AccountRegisterDto accountRegisterDto){
+        return ResponseEntity.ok(accountService.register(accountRegisterDto));
     }
     @RequestMapping(path = "login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody AccountLoginDto accountLoginDto){
