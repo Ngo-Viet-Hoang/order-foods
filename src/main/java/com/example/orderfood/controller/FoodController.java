@@ -72,7 +72,8 @@ public class FoodController {
 //        existFood.setDeletedBy(food.getDeletedBy());
 //        existFood.setDeletedAt(LocalDateTime.now());
 //        existFood.setUpdatedAt(LocalDateTime.now());
-        return ResponseEntity.ok(foodService.save(existFood));
+        foodService.save(existFood);
+        return ResponseEntity.ok().build();
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "delete/{id}")

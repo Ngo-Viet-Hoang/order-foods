@@ -19,11 +19,6 @@ import java.util.Optional;
 public class FoodService {
     final FoodRepository foodRepository;
     public Food save(Food food) {
-        Optional<Food> optionalFood =
-                foodRepository.findById(food.getId());
-        if (optionalFood.isPresent()) {
-            return null;
-        }
         return foodRepository.save(food);
     }
     public Page<Food> findAll(int page, int limit){
