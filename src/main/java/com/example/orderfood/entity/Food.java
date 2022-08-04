@@ -26,7 +26,6 @@ public class Food {
     private String description;
     @Enumerated(EnumType.ORDINAL)
     private FoodStatus status;
-    private LocalDateTime mealTime;
     @CreationTimestamp
     private LocalDateTime createdAt = LocalDateTime.now();
 

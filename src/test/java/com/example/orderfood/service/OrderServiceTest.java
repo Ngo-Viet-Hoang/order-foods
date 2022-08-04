@@ -27,8 +27,8 @@ public class OrderServiceTest {
     private ShoppingCartRepository shoppingCartRepository;
     @Autowired
     private FoodRepository foodRepository;
-    private String foodId01 = "6121929d-825d-4ec9-a818-556be65fdd3d";
-    private String foodId02 = "d7cfd53d-c2c5-41f9-a868-33b0874ce7ce";
+    private String foodId01 = "112345";
+    private String foodId02 = "1123453";
 
 
     @Autowired

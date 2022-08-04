@@ -49,7 +49,6 @@ class FoodServiceTest {
                 .description("hello")
                 .status(FoodStatus.SALE)
                 .category(category.get())
-                .mealTime(LocalDateTime.now())
                 .build();
         foodRepository.save(food1);
 
