@@ -1,7 +1,6 @@
 package com.example.orderfood.service;
 
 import com.example.orderfood.OrderFoodApplication;
-import com.example.orderfood.config.H2JpaConfig;
 import com.example.orderfood.entity.*;
 import com.example.orderfood.entity.dto.CartItemDTO;
 import com.example.orderfood.entity.dto.ShoppingCartDTO;
@@ -14,7 +13,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
@@ -27,14 +25,15 @@ public class OrderServiceTest {
     private ShoppingCartRepository shoppingCartRepository;
     @Autowired
     private FoodRepository foodRepository;
-    private String foodId01 = "112345";
-    private String foodId02 = "1123453";
+    private String foodId01 = "18ae88ca-3c81-4a92-bd13-3f95c9dbf3ba";
+    private String foodId02 = "22f3efe0-de2f-45f6-81d1-83fb7e30520a";
 
 
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired TelegramBotService telegramBotService;
 
 
     @Before
@@ -110,6 +109,7 @@ public class OrderServiceTest {
             System.out.println(od.getUnitPrice());
             System.out.println(od.getFood().getName());
         }
+        telegramBotService.sendErrorToMe(order.getAccount().getUsername());
     }
     @Test
     public void realSaveOrder() {

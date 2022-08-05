@@ -57,6 +57,7 @@ public class ShoppingCartController {
             shoppingCart.addTotalPrice(cartItem);
             setCartItem.add(cartItem);
         }
+
         shoppingCart.setItems(setCartItem);
         shoppingCartRepository.save(shoppingCart);
     }

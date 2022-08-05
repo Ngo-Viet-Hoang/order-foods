@@ -60,4 +60,5 @@ public class OrderController {
         Page<Order> result = this.orderService.findAll(param);
         return ResponseEntity.ok().body(result);
     }
+
 }

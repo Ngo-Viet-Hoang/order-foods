@@ -1,6 +1,7 @@
 package com.example.orderfood.service;
 
 import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
@@ -9,21 +10,23 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-@Builder
+@RequiredArgsConstructor
 public class TelegramBotService {
+    final OrderService orderService;
     private static final String BOT_TOKEN = "5535724474:AAF-Lg-J4opfZ97H_dXML-UzUk44zn79AWQ"; //token
     public static final String TOKEN_WEBHOOK = "reyfherye";
     public static String adminTelegram = "5373396626"; //id dau bep
-     public static void main(String[] args) throws Exception {
-     // String webhook =
-     //"https://hatforrent.com/api/public/v1/tele-bot-webhook?token=" +
-     // TOKEN_WEBHOOK;
-     // setWebhook(webhook);
-         sendErrorToMe("fsafsafa");
-     }
+//     public static void main(String[] args) throws Exception {
+//     // String webhook =
+//     //"https://hatforrent.com/api/public/v1/tele-bot-webhook?token=" +
+//     // TOKEN_WEBHOOK;
+//     // setWebhook(webhook);
+//         sendErrorToMe("fsafsafa");
+//     }
 
-    public static void sendErrorToMe(String message) {
-        sendMessage(adminTelegram + "", "" + message);
+    public void sendErrorToMe(String message) {
+        sendMessage(adminTelegram + "", "Don hang vua duoc dat voi ma so la " +
+                "" + message);
     }
 
     public static String sendMessage(long chat_id, String message) throws IOException {
