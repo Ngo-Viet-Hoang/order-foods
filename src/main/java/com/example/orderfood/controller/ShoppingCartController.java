@@ -4,8 +4,11 @@ package com.example.orderfood.controller;
 import com.example.orderfood.entity.*;
 import com.example.orderfood.entity.dto.CartItemDTO;
 import com.example.orderfood.entity.dto.ShoppingCartDTO;
+import com.example.orderfood.entity.entityEnum.OrderStatus;
 import com.example.orderfood.repository.FoodRepository;
 import com.example.orderfood.repository.ShoppingCartRepository;
+import com.example.orderfood.service.OrderService;
+import com.example.orderfood.service.TelegramBotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +27,10 @@ public class ShoppingCartController {
 
     @Autowired
     FoodRepository foodRepository;
+    @Autowired
+    TelegramBotService telegramBotService;
+    @Autowired
+    OrderService orderService;
 
     @RequestMapping(method = RequestMethod.POST)
     public void saveCart(@RequestBody Account account, @RequestBody ShoppingCartDTO shoppingCartDTO){
@@ -57,8 +64,18 @@ public class ShoppingCartController {
             shoppingCart.addTotalPrice(cartItem);
             setCartItem.add(cartItem);
         }
+        Order order = Order.builder()
+                .id(shoppingCart.getId())
+                . status(OrderStatus.DONE)
+
+                .totalPrice(shoppingCart.getTotalPrice())
+                . build();
+
 
         shoppingCart.setItems(setCartItem);
         shoppingCartRepository.save(shoppingCart);
+//        orderService.save(order);
+        telegramBotService.sendErrorToMe(shoppingCart.getAccount().getUsername());
     }
+
 }

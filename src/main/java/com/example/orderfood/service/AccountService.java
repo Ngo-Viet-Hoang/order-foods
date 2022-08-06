@@ -2,11 +2,15 @@ package com.example.orderfood.service;
 
 import com.example.orderfood.entity.Account;
 import com.example.orderfood.entity.Credential;
+import com.example.orderfood.entity.Food;
 import com.example.orderfood.entity.dto.AccountLoginDto;
 import com.example.orderfood.entity.dto.AccountRegisterDto;
 import com.example.orderfood.repository.AccountRepository;
 import com.example.orderfood.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -26,6 +30,7 @@ public class AccountService implements UserDetailsService {
 
     final AccountRepository accountRepository;
     final PasswordEncoder passwordEncoder;
+
     public AccountRegisterDto register(AccountRegisterDto accoutRegisterDto) {
         Optional<Account> optionalAccount =
                 accountRepository.findAccountByUsername(accoutRegisterDto.getUsername());
@@ -34,30 +39,31 @@ public class AccountService implements UserDetailsService {
         }
         Account account = Account.builder()
                 .username((accoutRegisterDto.getUsername()))
-                .passwordHash(passwordEncoder.encode( accoutRegisterDto.getPassword()))
+                .passwordHash(passwordEncoder.encode(accoutRegisterDto.getPassword()))
                 .email(accoutRegisterDto.getEmail())
                 .phone(accoutRegisterDto.getPhone())
                 .role(accoutRegisterDto.getRole())
                 .build();
         accountRepository.save(account);
         accoutRegisterDto.setId(account.getId());
-        return  accoutRegisterDto;
+        return accoutRegisterDto;
 
     }
-    public Credential login(AccountLoginDto accountLoginDto){
+
+    public Credential login(AccountLoginDto accountLoginDto) {
         Optional<Account> optionalAccount
                 = accountRepository.findAccountByUsername(accountLoginDto.getUsername());
-        if(!optionalAccount.isPresent()){
+        if (!optionalAccount.isPresent()) {
             throw new UsernameNotFoundException("User is not found");
         }
         Account account = optionalAccount.get();
         boolean isMatch = passwordEncoder.matches(accountLoginDto.getPassword(), account.getPasswordHash());
-        if(isMatch){
+        if (isMatch) {
             int expiredAfterDay = 7;
             String accessToken =
-                    JwtUtil.generateTokenByAccount(account, expiredAfterDay = 24*60*60*1000);
+                    JwtUtil.generateTokenByAccount(account, expiredAfterDay = 24 * 60 * 60 * 1000);
             String refreshToken =
-                    JwtUtil.generateTokenByAccount(account, 14* 24*60*60*1000);
+                    JwtUtil.generateTokenByAccount(account, 14 * 24 * 60 * 60 * 1000);
             Credential credential = new Credential();
             credential.setAccessToken(accessToken);
             credential.setRefreshToken(refreshToken);
@@ -70,20 +76,31 @@ public class AccountService implements UserDetailsService {
         }
 
     }
-    public void getInformation(){
+
+    public void getInformation() {
 
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Account> optionalAccount = accountRepository.findAccountByUsername(username);
-        if(!optionalAccount.isPresent()){
-            throw  new UsernameNotFoundException("Username is not found");
+        if (!optionalAccount.isPresent()) {
+            throw new UsernameNotFoundException("Username is not found");
         }
         Account account = optionalAccount.get();
         List<GrantedAuthority> authorities = new ArrayList<>();
         SimpleGrantedAuthority simpleGrantedAuthority =
                 new SimpleGrantedAuthority(account.getRole() == 1 ? "ADMIN" : "USER");
         authorities.add(simpleGrantedAuthority);
-        return new User(account.getUsername(),account.getPasswordHash(),authorities);
+        return new User(account.getUsername(), account.getPasswordHash(), authorities);
+    }
+
+    public Page<Account> findAll(int page, int limit) {
+        return accountRepository.findAll(
+                PageRequest.of(page - 1, limit, Sort.Direction.ASC, "id"));
+    }
+
+    public Optional<Account> findById(Long id) {
+        return accountRepository.findById(id);
     }
 }

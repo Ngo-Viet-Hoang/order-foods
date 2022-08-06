@@ -27,7 +27,7 @@ public class OrderController {
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "") String keyword,
-            @RequestParam(defaultValue = "0") String userId,
+//            @RequestParam(defaultValue = "0") String userId,
             @RequestParam(defaultValue = "2") int status) {
 
         Specification<Order> specification = Specification.where(null);
