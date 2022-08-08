@@ -37,7 +37,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/v1/foods/*").permitAll();
         http.authorizeRequests().antMatchers("/api/v1/categories/*").permitAll();
         http.authorizeRequests().antMatchers("/api/v1/admin/*").permitAll();
-        http.authorizeRequests().antMatchers("/api/v1/orders/*").hasAnyAuthority("ADMIN", "USER");
+        http.authorizeRequests().antMatchers("/api/v1/orders/*").permitAll();
 
 //        http.authorizeRequests().antMatchers("/api/v1/user/*").hasAnyAuthority("USER","ADMIN");
 //        http.authorizeRequests().antMatchers("/api/v1/foods/*").hasAnyAuthority("ADMIN","USER");
