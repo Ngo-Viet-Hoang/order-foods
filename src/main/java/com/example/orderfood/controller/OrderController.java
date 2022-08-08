@@ -103,12 +103,7 @@ public class OrderController {
     public ResponseEntity<?> orderFood(@RequestBody ReqOrder reqOrder) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-
-
-
         List<OrderDetail> orderDetails = new ArrayList<>();
-
-
 
         Optional<Account> account  = accountRepository.findById(Long.parseLong(principal.toString()));
 
@@ -117,6 +112,7 @@ public class OrderController {
         // create order
         Order order = new Order();
         order.setAccount(order.getAccount());
+//        order.setFullName(order.getFullName());
         order.setTotalPrice(order.getTotalPrice());
         order.setCreatedAt(order.getCreatedAt());
         order.setStatus(OrderStatus.DONE);
@@ -124,7 +120,7 @@ public class OrderController {
 
 //        logger.info("new order: " + newOrder.getId());
 
-
+//
         if (account.isPresent()){
             order.setAccount(account.get());
 
@@ -164,6 +160,8 @@ public class OrderController {
         orderRepository.save(orderNew);
         orderDetailRepository.saveAll(orderDetails);
         telegramBotService.sendErrorToMe(order.getAccount().getUsername());
+        telegramBotService.sendErrorToMe("https://order-foods.herokuapp.com/api/v1/foods/"+order.getId());
+//        telegramBotService.sendErrorToMe(order.getFullName()+order.getTotalPrice());
 
 
         return ResponseEntity.ok().body(reqOrder);

@@ -14,6 +14,7 @@ import java.util.List;
 public class ReqOrder {
 
     private List<ReqFood> foods;
+//    private String fullName;
     private String note;
     private String phone;
 
