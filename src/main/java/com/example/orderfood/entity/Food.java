@@ -21,7 +21,6 @@ public class Food {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String slug;
     private String image;
     private BigDecimal price;
     private String description;

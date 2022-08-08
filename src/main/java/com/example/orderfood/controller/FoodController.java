@@ -61,7 +61,6 @@ public class FoodController {
         }
         Food existFood = optionalFood.get();
         existFood.setName(food.getName());
-        existFood.setSlug(food.getSlug());
         existFood.setImage(food.getImage());
         existFood.setPrice(food.getPrice());
         existFood.setDescription(food.getDescription());

@@ -43,7 +43,6 @@ class FoodServiceTest {
         Food food1 = Food.builder()
 //                .id(UUID.randomUUID().toString())
                 .name("banh423432423")
-                .slug("banh")
                 .image("https://via.placeholder.com/150/92c952")
                 .price(BigDecimal.valueOf(12))
                 .description("hello")

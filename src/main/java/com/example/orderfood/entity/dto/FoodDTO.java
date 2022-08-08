@@ -12,10 +12,9 @@ import java.math.BigDecimal;
 public class FoodDTO {
     private String id;
     private String name;
-    private String slug;
     private String description;
     private String detail;
-    private String iamge;
+    private String image;
     private BigDecimal price;
     private String createdAt;
     private String updatedAt;
