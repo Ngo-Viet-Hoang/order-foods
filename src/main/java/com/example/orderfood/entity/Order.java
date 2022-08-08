@@ -9,6 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -18,15 +19,16 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "orders")
-public class Order extends BaseEntity {
+public class Order  {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @ManyToOne
     @JoinColumn(name = "accountId")
     private Account account;
     @CreatedDate
-    private LocalDateTime createdAt;
-    private BigDecimal totalPrice;
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private BigDecimal totalPrice = BigDecimal.ZERO;
     @Enumerated(EnumType.ORDINAL)
     private OrderStatus status;
 
@@ -36,24 +38,21 @@ public class Order extends BaseEntity {
     @JsonManagedReference
     private Set<OrderDetail> orderDetails;
 
-    @PostPersist
-    public void updateSlug() {
-        System.out.println("Before save");
-        System.out.println(id);
-    }
+//    @PostPersist
+//    public void updateSlug() {
+//        System.out.println("Before save");
+//        System.out.println(id);
+//    }
+//
+//    @PostUpdate
+//    public void afterSave() {
+//        System.out.println("After save");
+//        System.out.println(id);
+//    }
 
-    @PostUpdate
-    public void afterSave() {
-        System.out.println("After save");
-        System.out.println(id);
-    }
-
-    public void addTotalPrice(OrderDetail orderDetail) {
-        if (this.totalPrice == null) {
-            this.totalPrice = new BigDecimal(0);
-        }
-        BigDecimal quantityInBigDecimal = new BigDecimal(orderDetail.getQuantity());
-        this.totalPrice = this.totalPrice.add(
-                orderDetail.getUnitPrice().multiply(quantityInBigDecimal));
+    public void calTotalPrice(List<OrderDetail> details) {
+        details.forEach( e -> {
+            this.totalPrice = this.totalPrice.add(e.getUnitPrice().multiply(new BigDecimal(e.getQuantity())));
+        });
     }
 }

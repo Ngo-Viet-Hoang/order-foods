@@ -41,9 +41,9 @@ class FoodServiceTest {
         Optional<Category> category = Optional.of(categoryRepository.findById(1L).get());
 
         Food food1 = Food.builder()
-                .id(UUID.randomUUID().toString())
-                .name("com1234")
-                .slug("com")
+//                .id(UUID.randomUUID().toString())
+                .name("banh423432423")
+                .slug("banh")
                 .image("https://via.placeholder.com/150/92c952")
                 .price(BigDecimal.valueOf(12))
                 .description("hello")
@@ -51,35 +51,34 @@ class FoodServiceTest {
                 .category(category.get())
                 .build();
         foodRepository.save(food1);
-
-        List<Food> foods = foodRepository.findAll();
-        foods.forEach(e->{
-            System.out.printf("Foods: "+ e.getName());
-        });
-        Order order = Order.builder()
-                .id(UUID.randomUUID().toString())
-                .createdAt(LocalDateTime.now())
-                .status(OrderStatus.DONE)
-                .build();
-        System.out.println("Order: "+ order.getId());
-        HashSet<OrderDetail> orderDetails = new HashSet<>();
-        for(Food food :
-                foods){
-            OrderDetailId orderDetailId = new OrderDetailId();
-            orderDetailId.setOrderId(order.getId());
-            orderDetailId.setFoodId(food.getId());
-            OrderDetail orderDetail = OrderDetail.builder()
-                    .orderDetailId(orderDetailId)
-                    .order(order)
-                    .food(food)
-                    .quantity(10)
-                    .unitPrice(new BigDecimal(2222))
-                    .build();
-            orderDetails.add(orderDetail);
-        }
-
-        order.setOrderDetails(orderDetails);
-        orderRepository.save(order);
-        System.out.println("Hello");
+//
+//        List<Food> foods = foodRepository.findAll();
+//        foods.forEach(e->{
+//            System.out.printf("Foods: "+ e.getName());
+//        });
+//        Order order = Order.builder()
+//                .createdAt(LocalDateTime.now())
+//                .status(OrderStatus.DONE)
+//                .build();
+//        System.out.println("Order: "+ order.getId());
+//        HashSet<OrderDetail> orderDetails = new HashSet<>();
+//        for(Food food :
+//                foods){
+//            OrderDetailId orderDetailId = new OrderDetailId();
+//            orderDetailId.setOrderId(order.getId());
+////            orderDetailId.setFoodId(food.getId());
+//            OrderDetail orderDetail = OrderDetail.builder()
+//                    .orderDetailId(orderDetailId)
+//                    .order(order)
+//                    .food(food)
+//                    .quantity(10)
+//                    .unitPrice(new BigDecimal(2222))
+//                    .build();
+//            orderDetails.add(orderDetail);
+//        }
+//
+//        order.setOrderDetails(orderDetails);
+//        orderRepository.save(order);
+//        System.out.println("Hello");
     }
 }

@@ -25,10 +25,10 @@ public class FoodService {
         return foodRepository.findAll(
                 PageRequest.of(page-1, limit, Sort.Direction.ASC,"id"));
     }
-    public Optional<Food> findById(String id) {
+    public Optional<Food> findById(Long id) {
         return foodRepository.findById(id);
     }
-    public void deleteById(String id) {
+    public void deleteById(Long id) {
         foodRepository.deleteById(id);
     }
 

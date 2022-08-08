@@ -28,7 +28,7 @@ public class FoodController {
     CategoryRepository categoryRepository;
 
     @RequestMapping(method = RequestMethod.GET, path = "{id}")
-    public ResponseEntity<?> getDetail(@PathVariable String id) {
+    public ResponseEntity<?> getDetail(@PathVariable Long id) {
         Optional<Food> optionalFood = foodService.findById(id);
         if (!optionalFood.isPresent()) {
             ResponseEntity.badRequest().build();
@@ -54,7 +54,7 @@ public class FoodController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "{id}")
-    public ResponseEntity<Food> update(@PathVariable String id, @RequestBody Food food) {
+    public ResponseEntity<Food> update(@PathVariable Long id, @RequestBody Food food) {
         Optional<Food> optionalFood = foodService.findById(id);
         if (!optionalFood.isPresent()) {
             ResponseEntity.badRequest().build();
@@ -77,7 +77,7 @@ public class FoodController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "delete/{id}")
-    public  ResponseEntity<Food> delete(@PathVariable String id, @RequestBody Food food) {
+    public  ResponseEntity<Food> delete(@PathVariable Long id, @RequestBody Food food) {
         Optional<Food> optionalFood = foodService.findById(id);
         if (!optionalFood.isPresent()) {
             ResponseEntity.badRequest().build();
@@ -90,7 +90,7 @@ public class FoodController {
         return ResponseEntity.ok(foodService.save(existFood));
     }
     @RequestMapping(method = RequestMethod.DELETE, path = "{id}")
-    public ResponseEntity<?> delete(@PathVariable String id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         if (!foodService.findById(id).isPresent()) {
             ResponseEntity.badRequest().build();
         }

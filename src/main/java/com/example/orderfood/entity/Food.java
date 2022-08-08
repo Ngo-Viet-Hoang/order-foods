@@ -18,7 +18,8 @@ import java.time.LocalDateTime;
 @Table(name= "foods")
 public class Food {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private String slug;
     private String image;
