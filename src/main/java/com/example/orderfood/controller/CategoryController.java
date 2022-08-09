@@ -54,7 +54,7 @@ public class CategoryController {
         Category existCategory = optionalCategory.get();
         // map object
         existCategory.setName(category.getName());
-        existCategory.setCategoryStatus(CategoryStatus.SALE);
+        existCategory.setCategoryStatus(category.getCategoryStatus());
         return ResponseEntity.ok(categoryService.save(existCategory));
     }
     @RequestMapping(method = RequestMethod.PUT, path = "/delete{id}")

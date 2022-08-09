@@ -64,7 +64,8 @@ public class FoodController {
         existFood.setImage(food.getImage());
         existFood.setPrice(food.getPrice());
         existFood.setDescription(food.getDescription());
-        existFood.setStatus(FoodStatus.SALE);
+        existFood.setStatus(food.getStatus());
+        existFood.setCategory(food.getCategory());
 //        existFood.setMealTime(food.getMealTime());
 //        existFood.setCreatedBy(food.getCreatedBy());
 //        existFood.setUpdatedBy(food.getUpdatedBy());

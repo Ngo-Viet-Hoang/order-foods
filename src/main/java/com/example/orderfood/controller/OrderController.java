@@ -115,7 +115,7 @@ public class OrderController {
 //        order.setFullName(order.getFullName());
         order.setTotalPrice(order.getTotalPrice());
         order.setCreatedAt(order.getCreatedAt());
-        order.setStatus(OrderStatus.DONE);
+        order.setStatus(order.getStatus());
         // set data -> save order
 
 //        logger.info("new order: " + newOrder.getId());
