@@ -101,18 +101,18 @@ public class OrderController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
     public ResponseEntity<?> orderFood(@RequestBody ReqOrder reqOrder) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         List<OrderDetail> orderDetails = new ArrayList<>();
 
-        Optional<Account> account  = accountRepository.findById(Long.parseLong(principal.toString()));
+//        Optional<Account> account  = accountRepository.findById(Long.parseLong(principal.toString()));
 
 
 
         // create order
         Order order = new Order();
-        order.setAccount(order.getAccount());
-//        order.setFullName(order.getFullName());
+//        order.setAccount(order.getAccount());
+        order.setFullName(order.getFullName());
         order.setTotalPrice(order.getTotalPrice());
         order.setCreatedAt(order.getCreatedAt());
         order.setStatus(order.getStatus());
@@ -121,13 +121,13 @@ public class OrderController {
 //        logger.info("new order: " + newOrder.getId());
 
 //
-        if (account.isPresent()){
-            order.setAccount(account.get());
-
-
-        }else {
-
-        }
+//        if (account.isPresent()){
+//            order.setAccount(account.get());
+//
+//
+//        }else {
+//
+//        }
 
         Order orderNew = orderRepository.save(order);
 
@@ -159,9 +159,9 @@ public class OrderController {
         orderNew.calTotalPrice(orderDetails);
         orderRepository.save(orderNew);
         orderDetailRepository.saveAll(orderDetails);
-        telegramBotService.sendErrorToMe(order.getAccount().getUsername());
+//        telegramBotService.sendErrorToMe(order.getAccount().getUsername());
         telegramBotService.sendErrorToMe("https://order-foods.herokuapp.com/api/v1/foods/"+order.getId());
-//        telegramBotService.sendErrorToMe(order.getFullName()+order.getTotalPrice());
+        telegramBotService.sendErrorToMe(order.getFullName()+order.getTotalPrice());
 
 
         return ResponseEntity.ok().body(reqOrder);

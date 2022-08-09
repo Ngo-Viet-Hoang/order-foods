@@ -23,10 +23,10 @@ public class Order  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "accountId")
-    private Account account;
-//    private String fullName;
+//    @ManyToOne
+//    @JoinColumn(name = "accountId")
+//    private Account account;
+    private String fullName;
     @CreatedDate
     private LocalDateTime createdAt = LocalDateTime.now();
     private BigDecimal totalPrice = BigDecimal.ZERO;
@@ -38,18 +38,6 @@ public class Order  {
             fetch = FetchType.EAGER)
     @JsonManagedReference
     private Set<OrderDetail> orderDetails;
-
-//    @PostPersist
-//    public void updateSlug() {
-//        System.out.println("Before save");
-//        System.out.println(id);
-//    }
-//
-//    @PostUpdate
-//    public void afterSave() {
-//        System.out.println("After save");
-//        System.out.println(id);
-//    }
 
     public void calTotalPrice(List<OrderDetail> details) {
         details.forEach( e -> {
