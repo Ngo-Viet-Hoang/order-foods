@@ -162,7 +162,7 @@ public class OrderController {
 //        telegramBotService.sendErrorToMe(order.getAccount().getUsername());
 //        telegramBotService.sendErrorToMe("https://order-foods.herokuapp.com/api/v1/foods/"+order.getId());
         telegramBotService.sendErrorToMe( "Khach hang" + reqOrder.getFullName() +"voi so dien thoai " +reqOrder.getPhone() + "da dat mon "+
-                "https://order-foods.herokuapp.com/api/v1/foods/"+order.getId() + " kem thoe thong tin la" +
+                "https://order-foods.herokuapp.com/api/v1/orders/"+order.getId() + " kem thoe thong tin la" +
                 reqOrder.getNote() +
                 order.getTotalPrice() +
                 order.getCreatedAt());
