@@ -57,25 +57,24 @@ public class CategoryController {
         existCategory.setCategoryStatus(category.getCategoryStatus());
         return ResponseEntity.ok(categoryService.save(existCategory));
     }
-    @RequestMapping(method = RequestMethod.PUT, path = "/delete{id}")
-    public ResponseEntity<Category> delete(@PathVariable Long id, @RequestBody Category category) {
+    @RequestMapping(method = RequestMethod.PUT, path = "/delete/{id}")
+    public ResponseEntity<Category> delete(@PathVariable Long id) {
         Optional<Category> optionalCategory = categoryService.findById(id);
         if (!optionalCategory.isPresent()) {
             ResponseEntity.badRequest().build();
         }
         Category existCategory = optionalCategory.get();
         // map object
-        existCategory.setName(category.getName());
-        existCategory.setCategoryStatus(CategoryStatus.DELETED);
+        existCategory.setCategoryStatus(CategoryStatus.STOP);
         return ResponseEntity.ok(categoryService.save(existCategory));
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        if (!categoryService.findById(id).isPresent()) {
-            ResponseEntity.badRequest().build();
-        }
-        categoryService.deleteById(id);
-        return ResponseEntity.ok().build();
-    }
+//    @RequestMapping(method = RequestMethod.DELETE, path = "{id}")
+//    public ResponseEntity<?> delete(@PathVariable Long id) {
+//        if (!categoryService.findById(id).isPresent()) {
+//            ResponseEntity.badRequest().build();
+//        }
+//        categoryService.deleteById(id);
+//        return ResponseEntity.ok().build();
+//    }
 }

@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Controller
 @CrossOrigin("*")
@@ -23,6 +24,8 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 public class FoodController {
+
+    Logger logger = Logger.getLogger(FoodController.class.getName());
     final FoodService foodService;
     @Autowired
     CategoryRepository categoryRepository;
@@ -77,38 +80,40 @@ public class FoodController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "delete/{id}")
-    public  ResponseEntity<Food> delete(@PathVariable Long id, @RequestBody Food food) {
+    public  ResponseEntity<Food> delete(@PathVariable Long id ) {
+        logger.info("delete" + id);
         Optional<Food> optionalFood = foodService.findById(id);
         if (!optionalFood.isPresent()) {
             ResponseEntity.badRequest().build();
         }
         Food existFood = optionalFood.get();
         // map object
-        existFood.setName(food.getName());
+//        existFood.getName();
         existFood.setStatus(FoodStatus.STOP);
 //        existFood.setUpdatedAt(LocalDateTime.now());
         return ResponseEntity.ok(foodService.save(existFood));
     }
-    @RequestMapping(method = RequestMethod.DELETE, path = "{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        if (!foodService.findById(id).isPresent()) {
-            ResponseEntity.badRequest().build();
-        }
-        foodService.deleteById(id);
-        return ResponseEntity.ok().build();
-    }
-    @PostMapping("/uploadImage")
-    public String uploadImage(@RequestParam("image") MultipartFile image){
-        String returnValue = "";
-        try {
-            foodService.saveImage(image);
-        }catch (Exception e){
-            e.printStackTrace();
-            log.error("Error saving photo",e);
-            returnValue = "error";
-        }
-
-        return returnValue;
-    }
+//    @DeleteMapping( path = "{id}")
+//    public ResponseEntity<?> delete(@PathVariable Long id) {
+//        logger.info("delete" + id);
+//        if (!foodService.findById(id).isPresent()) {
+//            ResponseEntity.badRequest().build();
+//        }
+//        foodService.deleteById(id);
+//        return ResponseEntity.ok().build();
+//    }
+//    @PostMapping("/uploadImage")
+//    public String uploadImage(@RequestParam("image") MultipartFile image){
+//        String returnValue = "";
+//        try {
+//            foodService.saveImage(image);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            log.error("Error saving photo",e);
+//            returnValue = "error";
+//        }
+//
+//        return returnValue;
+//    }
 
 }
