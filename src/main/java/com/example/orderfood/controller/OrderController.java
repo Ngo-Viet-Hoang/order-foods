@@ -112,7 +112,7 @@ public class OrderController {
         // create order
         Order order = new Order();
 //        order.setAccount(order.getAccount());
-        order.setFullName(order.getFullName());
+//        order.setFullName(order.getFullName());
         order.setTotalPrice(order.getTotalPrice());
         order.setCreatedAt(order.getCreatedAt());
         order.setStatus(order.getStatus());
@@ -160,8 +160,13 @@ public class OrderController {
         orderRepository.save(orderNew);
         orderDetailRepository.saveAll(orderDetails);
 //        telegramBotService.sendErrorToMe(order.getAccount().getUsername());
-        telegramBotService.sendErrorToMe("https://order-foods.herokuapp.com/api/v1/foods/"+order.getId());
-        telegramBotService.sendErrorToMe(order.getFullName()+order.getTotalPrice());
+//        telegramBotService.sendErrorToMe("https://order-foods.herokuapp.com/api/v1/foods/"+order.getId());
+        telegramBotService.sendErrorToMe( "Khach hang" + reqOrder.getFullName() +"voi so dien thoai " +reqOrder.getPhone() + "da dat mon "+
+                "https://order-foods.herokuapp.com/api/v1/foods/"+order.getId() + " kem thoe thong tin la" +
+                reqOrder.getNote() +
+                order.getTotalPrice() +
+                order.getCreatedAt());
+
 
 
         return ResponseEntity.ok().body(reqOrder);
