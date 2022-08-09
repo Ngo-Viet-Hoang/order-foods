@@ -88,7 +88,7 @@ public class FoodController {
         }
         Food existFood = optionalFood.get();
         // map object
-//        existFood.getName();
+        existFood.getName();
         existFood.setStatus(FoodStatus.STOP);
 //        existFood.setUpdatedAt(LocalDateTime.now());
         return ResponseEntity.ok(foodService.save(existFood));

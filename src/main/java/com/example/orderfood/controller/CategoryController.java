@@ -65,6 +65,7 @@ public class CategoryController {
         }
         Category existCategory = optionalCategory.get();
         // map object
+        existCategory.getName();
         existCategory.setCategoryStatus(CategoryStatus.STOP);
         return ResponseEntity.ok(categoryService.save(existCategory));
     }
