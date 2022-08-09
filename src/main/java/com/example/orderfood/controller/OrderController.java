@@ -60,10 +60,10 @@ public class OrderController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> findAll(
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "1000") int limit,
+            @RequestParam(defaultValue = "100") int limit,
             @RequestParam(defaultValue = "") String keyword,
 //            @RequestParam(defaultValue = "0") String userId,
-            @RequestParam(defaultValue = "2") int status) {
+            @RequestParam(defaultValue = "") String status) {
 
         Specification<Order> specification = Specification.where(null);
 
@@ -73,12 +73,12 @@ public class OrderController {
             OrderSpecification filter = new OrderSpecification(searchCriteria);
             specification = specification.and(filter);
         }
-        if (status != 0) {
-            SearchCriteria searchCriteria
-                    = new SearchCriteria("status", SearchCriteriaOperator.EQUALS, status);
-            OrderSpecification filter = new OrderSpecification(searchCriteria);
-            specification = specification.and(filter);
-        }
+//        if (status != "") {
+//            SearchCriteria searchCriteria
+//                    = new SearchCriteria("status", SearchCriteriaOperator.EQUALS, status);
+//            OrderSpecification filter = new OrderSpecification(searchCriteria);
+//            specification = specification.and(filter);
+//        }
         Page<Order> result = this.orderService.findAll(page, limit, specification);
         return ResponseEntity.ok().body(result);
     }
@@ -112,7 +112,7 @@ public class OrderController {
         // create order
         Order order = new Order();
 //        order.setAccount(order.getAccount());
-//        order.setFullName(order.getFullName());
+        order.setFullName(order.getFullName());
         order.setTotalPrice(order.getTotalPrice());
         order.setCreatedAt(order.getCreatedAt());
         order.setStatus(order.getStatus());
