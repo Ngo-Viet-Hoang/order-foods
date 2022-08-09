@@ -60,7 +60,7 @@ public class OrderController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> findAll(
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int limit,
+            @RequestParam(defaultValue = "1000") int limit,
             @RequestParam(defaultValue = "") String keyword,
 //            @RequestParam(defaultValue = "0") String userId,
             @RequestParam(defaultValue = "2") int status) {
