@@ -59,16 +59,24 @@ public class FoodController {
     @RequestMapping(method = RequestMethod.PUT, path = "{id}")
     public ResponseEntity<Food> update(@PathVariable Long id, @RequestBody Food food) {
         Optional<Food> optionalFood = foodService.findById(id);
+
+        logger.info("abc: " + id);
         if (!optionalFood.isPresent()) {
             ResponseEntity.badRequest().build();
         }
         Food existFood = optionalFood.get();
+        if (food.getName() != null)
         existFood.setName(food.getName());
+        if (food.getImage() != null)
         existFood.setImage(food.getImage());
+        if (food.getPrice() != null)
         existFood.setPrice(food.getPrice());
+        if (food.getDescription() != null)
         existFood.setDescription(food.getDescription());
+        if (food.getStatus() != null)
         existFood.setStatus(food.getStatus());
-        existFood.setCategory(food.getCategory());
+        if (food.getCategory() != null)
+            existFood.setCategory(food.getCategory());
 //        existFood.setMealTime(food.getMealTime());
 //        existFood.setCreatedBy(food.getCreatedBy());
 //        existFood.setUpdatedBy(food.getUpdatedBy());
