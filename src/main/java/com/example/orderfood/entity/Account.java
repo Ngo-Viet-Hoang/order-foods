@@ -1,8 +1,11 @@
 package com.example.orderfood.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -19,6 +22,10 @@ public class Account {
     private String passwordHash;
     private String email;
     private String phone;
+    private Date birthday;
+    private String address;
     private int role;
+    @CreationTimestamp
+    private LocalDateTime createdAt = LocalDateTime.now();
 
 }

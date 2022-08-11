@@ -96,12 +96,15 @@ public class AccountService implements UserDetailsService {
         return new User(account.getUsername(), account.getPasswordHash(), authorities);
     }
 
-    public Page<Account> findAll(int page, int limit) {
-        return accountRepository.findAll(
-                PageRequest.of(page - 1, limit, Sort.Direction.ASC, "id"));
+    public List<Account> findAll() {
+        return accountRepository.findAll();
     }
-
     public Optional<Account> findById(Long id) {
         return accountRepository.findById(id);
     }
+
+    public Account save(Account account) {
+        return accountRepository.save(account);
+    }
+
 }

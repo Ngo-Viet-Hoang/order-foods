@@ -2,6 +2,8 @@ package com.example.orderfood.entity.dto;
 
 import lombok.*;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,6 +16,8 @@ public class AccountRegisterDto {
     private String confirmPassword;
     private String email;
     private String phone;
+    private Date birthday;
+    private String address;
     private int role;
 
 }
