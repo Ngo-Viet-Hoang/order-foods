@@ -42,7 +42,8 @@ public class AccountService implements UserDetailsService {
                 .passwordHash(passwordEncoder.encode(accoutRegisterDto.getPassword()))
                 .email(accoutRegisterDto.getEmail())
                 .phone(accoutRegisterDto.getPhone())
-                .role(accoutRegisterDto.getRole())
+//                .role(accoutRegisterDto.getRole())
+                .role(2)
                 .build();
         accountRepository.save(account);
         accoutRegisterDto.setId(account.getId());

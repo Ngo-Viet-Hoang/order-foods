@@ -112,7 +112,7 @@ public class OrderController {
         // create order
         Order order = new Order();
 //        order.setAccount(order.getAccount());
-        order.setFullName(order.getFullName());
+        order.setFullName(reqOrder.getFullName());
         order.setTotalPrice(order.getTotalPrice());
         order.setCreatedAt(order.getCreatedAt());
         order.setStatus(order.getStatus());

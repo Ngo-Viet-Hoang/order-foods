@@ -37,7 +37,7 @@ public class Order  {
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<OrderDetail> orderDetails;
+    private List<OrderDetail> orderDetails;
 
     public void calTotalPrice(List<OrderDetail> details) {
         details.forEach( e -> {
