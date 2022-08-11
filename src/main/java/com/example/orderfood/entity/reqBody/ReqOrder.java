@@ -17,6 +17,7 @@ public class ReqOrder {
     private String fullName;
     private String note;
     private String phone;
+    private String mealTime;
 
 
 

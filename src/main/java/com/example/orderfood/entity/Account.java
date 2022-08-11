@@ -22,7 +22,7 @@ public class Account {
     private String passwordHash;
     private String email;
     private String phone;
-    private Date birthday;
+    private String birthday;
     private String address;
     private int role;
     @CreationTimestamp

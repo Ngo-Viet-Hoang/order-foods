@@ -117,7 +117,6 @@ public class OrderController {
         order.setFullName(reqOrder.getFullName());
         order.setTotalPrice(order.getTotalPrice());
         order.setCreatedAt(order.getCreatedAt());
-        order.setStatus(order.getStatus());
         // set data -> save order
 
 //        logger.info("new order: " + newOrder.getId());
@@ -167,7 +166,9 @@ public class OrderController {
                 "https://order-foods.herokuapp.com/api/v1/orders/"+order.getId() + " kem thoe thong tin la" +
                 reqOrder.getNote() +
                 order.getTotalPrice() +
-                order.getCreatedAt());
+                reqOrder.getMealTime()
+                        + order.getCreatedAt()
+        );
 
 
 
