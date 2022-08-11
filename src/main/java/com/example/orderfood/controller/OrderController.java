@@ -80,7 +80,9 @@ public class OrderController {
 //            specification = specification.and(filter);
 //        }
         Page<Order> result = this.orderService.findAll(page, limit, specification);
-        return ResponseEntity.ok().body(result);
+        List<Order> orderList = result.getContent();
+
+        return ResponseEntity.ok().body(orderList);
     }
     @RequestMapping(method = RequestMethod.GET, path = "{id}")
     public ResponseEntity<?> getDetail(@PathVariable Long id) {
