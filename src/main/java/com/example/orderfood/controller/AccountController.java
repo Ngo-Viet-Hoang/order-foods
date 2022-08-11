@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -40,11 +41,35 @@ public class AccountController {
         return ResponseEntity.ok(optionalFood.get());
     }
     @RequestMapping(path = "/list",method = RequestMethod.GET)
-    public ResponseEntity<?> findAll(@RequestParam(value = "page", defaultValue = "1") int page,
-                                     @RequestParam(value = "limit", defaultValue = "10") int limit,
-                                     Model model) {
-        return ResponseEntity.ok(model.addAttribute("Pageable", accountService.findAll(page, limit)));
+    public ResponseEntity<List<Account>> getList(){
+        return ResponseEntity.ok(accountService.findAll());
     }
+    @RequestMapping(method = RequestMethod.PUT, path = "{id}")
+    public ResponseEntity<Account> update(@PathVariable Long id, @RequestBody Account account){
+        Optional<Account> optionalAccount = accountService.findById(id);
+        if (!optionalAccount.isPresent()) {
+            ResponseEntity.badRequest().build();
+        }
+        Account existAccount = optionalAccount.get();
+        if (account.getUsername() != null)
+            existAccount.setUsername(account.getUsername());
+        if (account.getPasswordHash() != null)
+            account.setPasswordHash(account.getPasswordHash());
+        if (account.getEmail() != null)
+            account.setEmail(account.getEmail());
+        if (account.getPhone() != null)
+            account.setPhone(account.getPhone());
+            account.setRole(account.getRole());
+        if (account.getBirthday() != null)
+            account.setBirthday(account.getBirthday());
+        if (account.getAddress() != null)
+            account.setAddress(account.getAddress());
+
+        accountService.save(existAccount);
+        return ResponseEntity.ok().build();
+
+    }
+
 
 
 }

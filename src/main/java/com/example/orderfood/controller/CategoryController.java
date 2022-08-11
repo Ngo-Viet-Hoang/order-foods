@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -39,11 +40,8 @@ public class CategoryController {
         return ResponseEntity.ok(optionalCategory.get());
     }
     @RequestMapping(path = "list" , method = RequestMethod.GET)
-    public ResponseEntity<?> findAll(@RequestParam(value = "page",defaultValue = "1") int page,
-                          @RequestParam(value = "limit",defaultValue = "10")int limit,
-                          Model model){
-        model.addAttribute("Pageable",categoryService.findAll(page, limit));
-        return ResponseEntity.ok(model.addAttribute("Pageable", categoryService.findAll(page, limit)));
+    public ResponseEntity<List<Category>>  getList(){
+        return ResponseEntity.ok(categoryService.findAll());
     }
     @RequestMapping(method = RequestMethod.PUT, path = "{id}")
     public ResponseEntity<Category> update(@PathVariable Long id, @RequestBody Category category) {
