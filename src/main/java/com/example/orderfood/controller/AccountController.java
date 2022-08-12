@@ -54,7 +54,7 @@ public class AccountController {
     }
 
 
-//    @RequestMapping(method = RequestMethod.PUT)
+    //    @RequestMapping(method = RequestMethod.PUT)
 //    public ResponseEntity<?> update( @RequestBody AccountRegisterDto accountRegisterDto){
 //        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        Optional<Account> account  = accountRepository.findById(Long.parseLong(principal.toString()));
@@ -79,32 +79,30 @@ public class AccountController {
 //        return ResponseEntity.ok(existAccount);
 //
 //    }
-@RequestMapping(method = RequestMethod.PUT,path = "{id}")
-public ResponseEntity<?> update( @RequestBody AccountRegisterDto accountRegisterDto){
-    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    Optional<Account> account  = accountRepository.findById(Long.parseLong(principal.toString()));
-    if (!account.isPresent()) {
-        ResponseEntity.badRequest().build();
+    @RequestMapping(method = RequestMethod.PUT,path = "{id}")
+    public ResponseEntity<?> update( @RequestBody AccountRegisterDto accountRegisterDto){
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Optional<Account> account  = accountRepository.findById(Long.parseLong(principal.toString()));
+        Optional<Account> account = accountService.findById(accountRegisterDto.getId());
+        if (!account.isPresent()) {
+            ResponseEntity.badRequest().build();
+        }
+        Account existAccount = account.get();
+        if (accountRegisterDto.getUsername() != null)
+            existAccount.setUsername(accountRegisterDto.getUsername());
+
+        if (accountRegisterDto.getPassword() != null)
+
+
+            existAccount.setPasswordHash(passwordEncoder.encode(accountRegisterDto.getPassword()));
+        if (accountRegisterDto.getEmail() != null)
+            existAccount.setEmail(accountRegisterDto.getEmail());
+        if (accountRegisterDto.getPhone() != null)
+            existAccount.setPhone(accountRegisterDto.getPhone());
+        existAccount.setRole(accountRegisterDto.getRole());
+
+        accountService.save(existAccount);
+        return ResponseEntity.ok(existAccount);
+
     }
-    Account existAccount = account.get();
-    if (accountRegisterDto.getUsername() != null)
-        existAccount.setUsername(accountRegisterDto.getUsername());
-
-    if (accountRegisterDto.getPassword() != null)
-
-
-        existAccount.setPasswordHash(passwordEncoder.encode(accountRegisterDto.getPassword()));
-    if (accountRegisterDto.getEmail() != null)
-        existAccount.setEmail(accountRegisterDto.getEmail());
-    if (accountRegisterDto.getPhone() != null)
-        existAccount.setPhone(accountRegisterDto.getPhone());
-    existAccount.setRole(accountRegisterDto.getRole());
-
-    accountService.save(existAccount);
-    return ResponseEntity.ok(existAccount);
-
-}
-
-
-
 }
