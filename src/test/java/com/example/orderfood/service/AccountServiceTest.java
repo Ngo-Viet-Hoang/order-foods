@@ -24,8 +24,6 @@ class AccountServiceTest {
         accoutRegisterDto.setPassword("1234453");
         accoutRegisterDto.setEmail("ngoviethoanrerg@gmail.com");
         accoutRegisterDto.setPhone("012345456789");
-        accoutRegisterDto.setBirthday("222");
-        accoutRegisterDto.setAddress("Ha Noi");
         accoutRegisterDto.setRole(1);
         AccountRegisterDto afterCreate = accoutService.register(accoutRegisterDto);
         System.out.println(afterCreate);

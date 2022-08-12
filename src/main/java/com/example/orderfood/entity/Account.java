@@ -22,8 +22,6 @@ public class Account {
     private String passwordHash;
     private String email;
     private String phone;
-    private String birthday;
-    private String address;
     private int role;
     @CreationTimestamp
     private LocalDateTime createdAt = LocalDateTime.now();

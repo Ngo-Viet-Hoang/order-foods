@@ -60,10 +60,6 @@ public class AccountController {
         if (account.getPhone() != null)
             account.setPhone(account.getPhone());
             account.setRole(account.getRole());
-        if (account.getBirthday() != null)
-            account.setBirthday(account.getBirthday());
-        if (account.getAddress() != null)
-            account.setAddress(account.getAddress());
 
         accountService.save(existAccount);
         return ResponseEntity.ok().build();

@@ -42,8 +42,6 @@ public class AccountService implements UserDetailsService {
                 .passwordHash(passwordEncoder.encode(accoutRegisterDto.getPassword()))
                 .email(accoutRegisterDto.getEmail())
                 .phone(accoutRegisterDto.getPhone())
-                .birthday(accoutRegisterDto.getBirthday())
-                .address(accoutRegisterDto.getAddress())
 //                .role(accoutRegisterDto.getRole())
                 .role(2)
                 .build();
