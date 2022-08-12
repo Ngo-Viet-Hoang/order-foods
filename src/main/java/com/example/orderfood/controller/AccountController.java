@@ -4,9 +4,13 @@ import com.example.orderfood.entity.Account;
 import com.example.orderfood.entity.Food;
 import com.example.orderfood.entity.dto.AccountLoginDto;
 import com.example.orderfood.entity.dto.AccountRegisterDto;
+import com.example.orderfood.repository.AccountRepository;
 import com.example.orderfood.service.AccountService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +24,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AccountController {
     final AccountService accountService;
+    @Autowired
+    AccountRepository accountRepository;
+
+    final PasswordEncoder passwordEncoder;
     @RequestMapping(path = "register", method = RequestMethod.POST)
     public ResponseEntity<?> register(@RequestBody AccountRegisterDto accountRegisterDto){
         return ResponseEntity.ok(accountService.register(accountRegisterDto));
@@ -44,25 +52,31 @@ public class AccountController {
     public ResponseEntity<List<Account>> getList(){
         return ResponseEntity.ok(accountService.findAll());
     }
-    @RequestMapping(method = RequestMethod.PUT, path = "{id}")
-    public ResponseEntity<Account> update(@PathVariable Long id, @RequestBody Account account){
-        Optional<Account> optionalAccount = accountService.findById(id);
-        if (!optionalAccount.isPresent()) {
+
+
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<?> update( @RequestBody AccountRegisterDto accountRegisterDto){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<Account> account  = accountRepository.findById(Long.parseLong(principal.toString()));
+        if (!account.isPresent()) {
             ResponseEntity.badRequest().build();
         }
-        Account existAccount = optionalAccount.get();
-        if (account.getUsername() != null)
-            existAccount.setUsername(account.getUsername());
-        if (account.getPasswordHash() != null)
-            account.setPasswordHash(account.getPasswordHash());
-        if (account.getEmail() != null)
-            account.setEmail(account.getEmail());
-        if (account.getPhone() != null)
-            account.setPhone(account.getPhone());
-            account.setRole(account.getRole());
+        Account existAccount = account.get();
+        if (accountRegisterDto.getUsername() != null)
+            existAccount.setUsername(accountRegisterDto.getUsername());
+
+        if (accountRegisterDto.getPassword() != null)
+
+
+            existAccount.setPasswordHash(passwordEncoder.encode(accountRegisterDto.getPassword()));
+        if (accountRegisterDto.getEmail() != null)
+            existAccount.setEmail(accountRegisterDto.getEmail());
+        if (accountRegisterDto.getPhone() != null)
+            existAccount.setPhone(accountRegisterDto.getPhone());
+            existAccount.setRole(accountRegisterDto.getRole());
 
         accountService.save(existAccount);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(existAccount);
 
     }
 
