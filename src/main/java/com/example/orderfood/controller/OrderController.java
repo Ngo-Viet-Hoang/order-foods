@@ -168,9 +168,9 @@ public class OrderController {
         telegramBotService.sendErrorToMe( "Khach hang" + reqOrder.getFullName() +"voi so dien thoai " +reqOrder.getPhone() + "da dat mon "+
                 "https://order-foods.herokuapp.com/api/v1/orders/"+order.getId() + " kem thoe thong tin la" +
                 reqOrder.getNote() +
-                order.getTotalPrice() +
-                reqOrder.getMealTime()
-                        + order.getCreatedAt()
+                order.getTotalPrice()
+                        + reqOrder.getMealTime()
+//                        + order.getCreatedAt()
         );
 
 
@@ -187,6 +187,8 @@ public class OrderController {
          Order existOrder = optionalOrder.get();
 
         existOrder.setOrderStatus(OrderStatus.DONE);
+        telegramBotService.sendErrorToMe("Mon an cua khach hang da hoan thanh");
         return ResponseEntity.ok(orderService.save(existOrder));
+
     }
 }
