@@ -14,10 +14,10 @@ public enum OrderStatus {
     }
 
     public static OrderStatus of(int value) {
-        for (OrderStatus  status :
+        for (OrderStatus  orderStatus :
                 OrderStatus .values()) {
-            if(status.getValue() == value){
-                return status;
+            if(orderStatus.getValue() == value){
+                return orderStatus;
             }
         }
         return OrderStatus .PENDING;

@@ -31,7 +31,7 @@ public class Order  {
     private LocalDateTime createdAt = LocalDateTime.now();
     private BigDecimal totalPrice = BigDecimal.ZERO;
     @Enumerated(EnumType.ORDINAL)
-    private OrderStatus status;
+    private OrderStatus orderStatus;
 
     @OneToMany(mappedBy = "order",
             cascade = CascadeType.ALL,

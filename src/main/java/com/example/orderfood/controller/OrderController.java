@@ -117,6 +117,7 @@ public class OrderController {
         order.setFullName(reqOrder.getFullName());
         order.setTotalPrice(order.getTotalPrice());
         order.setCreatedAt(order.getCreatedAt());
+//        order.setOrderStatus(OrderStatus.PENDING);
         // set data -> save order
 
 //        logger.info("new order: " + newOrder.getId());
@@ -131,7 +132,7 @@ public class OrderController {
 //        }
 
         Order orderNew = orderRepository.save(order);
-
+        orderNew.setOrderStatus(OrderStatus.PENDING);
         logger.info("new order: " + orderNew.getId());
 
         // craete order detail
@@ -158,8 +159,9 @@ public class OrderController {
 
 
         orderNew.calTotalPrice(orderDetails);
+        List<OrderDetail> details =  orderDetailRepository.saveAll(orderDetails);
+        orderNew.setOrderDetails(details);
         orderRepository.save(orderNew);
-        orderDetailRepository.saveAll(orderDetails);
 //        telegramBotService.sendErrorToMe(order.getAccount().getUsername());
 //        telegramBotService.sendErrorToMe("https://order-foods.herokuapp.com/api/v1/foods/"+order.getId());
         telegramBotService.sendErrorToMe( "Khach hang" + reqOrder.getFullName() +"voi so dien thoai " +reqOrder.getPhone() + "da dat mon "+
@@ -172,6 +174,6 @@ public class OrderController {
 
 
 
-        return ResponseEntity.ok().body(reqOrder);
+        return ResponseEntity.ok().body(orderNew);
     }
 }
