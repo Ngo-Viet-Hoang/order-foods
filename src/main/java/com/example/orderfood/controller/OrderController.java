@@ -4,6 +4,7 @@ import com.example.orderfood.entity.Account;
 import com.example.orderfood.entity.Food;
 import com.example.orderfood.entity.Order;
 import com.example.orderfood.entity.OrderDetail;
+import com.example.orderfood.entity.entityEnum.FoodStatus;
 import com.example.orderfood.entity.entityEnum.OrderStatus;
 import com.example.orderfood.entity.reqBody.ReqFood;
 import com.example.orderfood.entity.reqBody.ReqOrder;
@@ -175,5 +176,17 @@ public class OrderController {
 
 
         return ResponseEntity.ok().body(orderNew);
+    }
+    @RequestMapping(method = RequestMethod.PUT, path = "{id}")
+    public  ResponseEntity<Order> delete(@PathVariable Long id ) {
+        logger.info("delete" + id);
+        Optional<Order> optionalOrder = orderService.findById(id);
+        if (!optionalOrder.isPresent()) {
+            ResponseEntity.badRequest().build();
+        }
+         Order existOrder = optionalOrder.get();
+
+        existOrder.setOrderStatus(OrderStatus.DONE);
+        return ResponseEntity.ok(orderService.save(existOrder));
     }
 }
