@@ -27,6 +27,9 @@ public class Order  {
 //    @JoinColumn(name = "accountId")
 //    private Account account;
     private String fullName;
+    private String phone;
+    private String note;
+    private String mealTime;
     @CreatedDate
     private LocalDateTime createdAt = LocalDateTime.now();
     private BigDecimal totalPrice = BigDecimal.ZERO;
