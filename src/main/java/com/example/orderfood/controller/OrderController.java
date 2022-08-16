@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.logging.Logger;
@@ -112,8 +113,17 @@ public class OrderController {
 
 //        Optional<Account> account  = accountRepository.findById(Long.parseLong(principal.toString()));
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime dateTime = LocalDateTime.parse(reqOrder.getMealTime(), formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime today = LocalDateTime.now();
+
+        String strDate = today.format(formatterDate);
+
+        LocalDateTime orderDateTime = LocalDateTime.parse(strDate + " " + reqOrder.getMealTime() , formatter);
+
+
+
+
 
         // create order
         Order order = new Order();
@@ -123,7 +133,7 @@ public class OrderController {
         order.setCreatedAt(order.getCreatedAt());
         order.setPhone(reqOrder.getPhone());
         order.setNote(reqOrder.getNote());
-        order.setMealTime(dateTime);
+        order.setMealTime(orderDateTime);
 //        order.setOrderStatus(OrderStatus.PENDING);
         // set data -> save order
 
