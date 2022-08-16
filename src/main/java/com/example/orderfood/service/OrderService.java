@@ -27,7 +27,7 @@ public class OrderService {
     public Page<Order> findAll(int page, int limit,
                                Specification<Order> orderSpecification) {
         return orderRepository.findAll(
-                orderSpecification, PageRequest.of(page - 1, limit, Sort.by(Sort.Direction.ASC, "createdAt")));
+                orderSpecification, PageRequest.of(page - 1, limit, Sort.by(Sort.Direction.ASC, "orderStatus")));
     }
 
     public Page<Order> findAll(FilterParameter param) {
@@ -51,7 +51,7 @@ public class OrderService {
             specification = specification.and(filter);
         }
         return orderRepository.findAll(
-                specification, PageRequest.of(param.getPage() - 1, param.getLimit()));
+                specification, PageRequest.of(param.getPage() - 1, param.getLimit(), Sort.by(Sort.Direction.ASC, "orderStatus")));
     }
     public Optional<Order> findById(Long id) {
         return orderRepository.findById(id);
