@@ -4,6 +4,7 @@ import com.example.orderfood.entity.basic.BaseEntity;
 import com.example.orderfood.entity.entityEnum.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.joda.time.DateTime;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -29,7 +30,7 @@ public class Order  {
     private String fullName;
     private String phone;
     private String note;
-    private String mealTime;
+    private LocalDateTime mealTime;
     @CreatedDate
     private LocalDateTime createdAt = LocalDateTime.now();
     private BigDecimal totalPrice = BigDecimal.ZERO;

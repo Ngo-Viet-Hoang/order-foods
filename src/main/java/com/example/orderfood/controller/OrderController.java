@@ -29,6 +29,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -110,7 +112,8 @@ public class OrderController {
 
 //        Optional<Account> account  = accountRepository.findById(Long.parseLong(principal.toString()));
 
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime dateTime = LocalDateTime.parse(reqOrder.getMealTime(), formatter);
 
         // create order
         Order order = new Order();
@@ -120,7 +123,7 @@ public class OrderController {
         order.setCreatedAt(order.getCreatedAt());
         order.setPhone(reqOrder.getPhone());
         order.setNote(reqOrder.getNote());
-        order.setMealTime(reqOrder.getMealTime());
+        order.setMealTime(dateTime);
 //        order.setOrderStatus(OrderStatus.PENDING);
         // set data -> save order
 
@@ -172,7 +175,7 @@ public class OrderController {
                 "https://order-foods.herokuapp.com/api/v1/orders/"+order.getId() + " kem thoe thong tin la" +
                 order.getNote()
 //                        + order.getTotalPrice()
-                        + reqOrder.getMealTime()
+                        + order.getMealTime()
 //                        + order.getCreatedAt()
         );
 
