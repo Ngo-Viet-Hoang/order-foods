@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @RunWith(SpringRunner.class)
@@ -23,6 +24,13 @@ class AccountServiceTest {
     AccountService accoutService;
     @Autowired
     AccountRepository accountRepository;
+
+    public static void main(String[] args) {
+        Pattern pattern = Pattern.compile("/(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}/");
+
+        Matcher matcher = pattern.matcher("0369631596");
+        System.out.println(matcher.matches());
+    }
 
     @Test
     void register() {
@@ -50,13 +58,16 @@ class AccountServiceTest {
                 "(1234567890)","123)4567890", "12345678901", "(1)234567890",
                 "(123)-4567890", "1", "12-3456-7890", "123-4567", "Hello world"};
 
-        List<Account> accountList = accountRepository.findAll();
-        for (Account account:accountList
-             ) {
-            String phone = account.getPhone();
 
-            System.out.println(phone.replaceFirst("^(\\\\+\\\\d{1,3}( )?)?((\\\\(\\\\d{1,3}\\\\))|\\\\d{1,3})[- .]?\\\\d{3,4}[- .]?\\\\d{4}$", "($1) $2-$3"));
-        }
+
+
+//        List<Account> accountList = accountRepository.findAll();
+//        for (Account account:accountList
+//             ) {
+//            String phone = account.getPhone();
+//
+//            System.out.println(phone.replaceFirst("^(\\\\+\\\\d{1,3}( )?)?((\\\\(\\\\d{1,3}\\\\))|\\\\d{1,3})[- .]?\\\\d{3,4}[- .]?\\\\d{4}$", "($1) $2-$3"));
+//        }
 
     }
     @Test
