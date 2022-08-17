@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -50,10 +51,8 @@ public class FoodController {
     }
 
     @RequestMapping(path = "/list",method = RequestMethod.GET)
-    public ResponseEntity<?> findAll(@RequestParam(value = "page", defaultValue = "1") int page,
-                                     @RequestParam(value = "limit", defaultValue = "100") int limit,
-                                     Model model) {
-        return ResponseEntity.ok(model.addAttribute("Pageable", foodService.findAll(page, limit)));
+    public ResponseEntity<List<Food>> getList(){
+        return ResponseEntity.ok(foodService.findAll());
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "{id}")
@@ -77,12 +76,6 @@ public class FoodController {
         existFood.setStatus(food.getStatus());
         if (food.getCategory() != null)
             existFood.setCategory(food.getCategory());
-//        existFood.setMealTime(food.getMealTime());
-//        existFood.setCreatedBy(food.getCreatedBy());
-//        existFood.setUpdatedBy(food.getUpdatedBy());
-//        existFood.setDeletedBy(food.getDeletedBy());
-//        existFood.setDeletedAt(LocalDateTime.now());
-//        existFood.setUpdatedAt(LocalDateTime.now());
         foodService.save(existFood);
         return ResponseEntity.ok().build();
     }

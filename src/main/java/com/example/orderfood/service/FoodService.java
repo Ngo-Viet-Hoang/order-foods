@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,9 +22,8 @@ public class FoodService {
     public Food save(Food food) {
         return foodRepository.save(food);
     }
-    public Page<Food> findAll(int page, int limit){
-        return foodRepository.findAll(
-                PageRequest.of(page-1, limit, Sort.Direction.ASC,"id"));
+    public List<Food> findAll() {
+        return foodRepository.findAll();
     }
     public Optional<Food> findById(Long id) {
         return foodRepository.findById(id);

@@ -77,12 +77,6 @@ public class OrderController {
             OrderSpecification filter = new OrderSpecification(searchCriteria);
             specification = specification.and(filter);
         }
-//        if (status != "") {
-//            SearchCriteria searchCriteria
-//                    = new SearchCriteria("status", SearchCriteriaOperator.EQUALS, status);
-//            OrderSpecification filter = new OrderSpecification(searchCriteria);
-//            specification = specification.and(filter);
-//        }
         Page<Order> result = this.orderService.findAll(page, limit, specification);
         List<Order> orderList = result.getContent();
 
