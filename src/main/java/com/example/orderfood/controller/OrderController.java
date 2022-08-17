@@ -197,6 +197,7 @@ public class OrderController {
          Order existOrder = optionalOrder.get();
 
         existOrder.setOrderStatus(OrderStatus.DONE);
+//        if(!existOrder.getOrderStatus().equals(OrderStatus.DONE))
         telegramBotService.sendErrorToMe("Mon an cua khach hang da hoan thanh");
         return ResponseEntity.ok(orderService.save(existOrder));
 

@@ -31,12 +31,13 @@ public class AccountService implements UserDetailsService {
     final AccountRepository accountRepository;
     final PasswordEncoder passwordEncoder;
 
-    public Account register(AccountRegisterDto accountRegisterDto) {
-        Optional<Account> optionalAccount =
-                accountRepository.findAccountByUsername(accountRegisterDto.getUsername());
-        if (optionalAccount.isPresent()) {
-            return null;
+    public Account register(AccountRegisterDto accountRegisterDto) throws Exception {
+        List<Account> optionalAccount =
+                accountRepository.findAccountsByPhoneOrEmail(accountRegisterDto.getPhone(),accountRegisterDto.getEmail());
+        if (optionalAccount.size() > 0) {
+            throw new Exception("Account exist");
         }
+
 
         Account account = Account.builder()
                 .username((accountRegisterDto.getUsername()))
