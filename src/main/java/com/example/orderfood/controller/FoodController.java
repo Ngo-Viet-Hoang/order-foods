@@ -50,9 +50,16 @@ public class FoodController {
         return ResponseEntity.ok(foodService.save(food));
     }
 
+//    @RequestMapping(path = "/list",method = RequestMethod.GET)
+//    public ResponseEntity<List<Food>> getList(){
+//        return ResponseEntity.ok(foodService.findAll());
+//    }
+
     @RequestMapping(path = "/list",method = RequestMethod.GET)
-    public ResponseEntity<List<Food>> getList(){
-        return ResponseEntity.ok(foodService.findAll());
+    public ResponseEntity<?> findAll(@RequestParam(value = "page", defaultValue = "1") int page,
+                                     @RequestParam(value = "limit", defaultValue = "100") int limit,
+                                     Model model) {
+        return ResponseEntity.ok(model.addAttribute("Pageable", foodService.findAll(page, limit)));
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "{id}")

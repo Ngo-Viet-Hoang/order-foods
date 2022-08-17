@@ -22,8 +22,9 @@ public class FoodService {
     public Food save(Food food) {
         return foodRepository.save(food);
     }
-    public List<Food> findAll() {
-        return foodRepository.findAll();
+    public Page<Food> findAll(int page, int limit){
+        return foodRepository.findAll(
+                PageRequest.of(page-1, limit, Sort.Direction.ASC,"id"));
     }
     public Optional<Food> findById(Long id) {
         return foodRepository.findById(id);
