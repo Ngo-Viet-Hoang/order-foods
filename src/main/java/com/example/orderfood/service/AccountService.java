@@ -31,12 +31,13 @@ public class AccountService implements UserDetailsService {
     final AccountRepository accountRepository;
     final PasswordEncoder passwordEncoder;
 
-    public AccountRegisterDto register(AccountRegisterDto accoutRegisterDto) {
+    public Account register(AccountRegisterDto accoutRegisterDto) {
         Optional<Account> optionalAccount =
                 accountRepository.findAccountByUsername(accoutRegisterDto.getUsername());
         if (optionalAccount.isPresent()) {
             return null;
         }
+
         Account account = Account.builder()
                 .username((accoutRegisterDto.getUsername()))
                 .passwordHash(passwordEncoder.encode(accoutRegisterDto.getPassword()))
@@ -45,9 +46,7 @@ public class AccountService implements UserDetailsService {
 //                .role(accoutRegisterDto.getRole())
                 .role(2)
                 .build();
-        accountRepository.save(account);
-        accoutRegisterDto.setId(account.getId());
-        return accoutRegisterDto;
+        return accountRepository.save(account);
 
     }
 
