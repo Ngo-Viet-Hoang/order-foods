@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public class AccountController {
 
     final PasswordEncoder passwordEncoder;
     @RequestMapping(path = "register", method = RequestMethod.POST)
-    public ResponseEntity<?> register(@RequestBody AccountRegisterDto accountRegisterDto) throws Exception {
+    public ResponseEntity<?> register(@RequestBody @Valid AccountRegisterDto accountRegisterDto) throws Exception {
         return ResponseEntity.ok(accountService.register(accountRegisterDto));
     }
     @RequestMapping(path = "login", method = RequestMethod.POST)
