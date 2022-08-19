@@ -35,10 +35,10 @@ class AccountServiceTest {
     @Test
     void register() {
         AccountRegisterDto accoutRegisterDto = new AccountRegisterDto();
-        accoutRegisterDto.setUsername("viethoanrtweg0445");
+        accoutRegisterDto.setUsername("vieeg0445");
         accoutRegisterDto.setPassword("1234453");
-        accoutRegisterDto.setEmail("ngoviethoanrertrtrg@gmail.com");
-        accoutRegisterDto.setPhone("012345456789");
+        accoutRegisterDto.setEmail("ngov@gmail.com");
+        accoutRegisterDto.setPhone("0123456799");
         accoutRegisterDto.setRole(1);
         Account afterCreate = null;
         try {
@@ -73,7 +73,7 @@ class AccountServiceTest {
     @Test
     void login() {
         AccountLoginDto accountLoginDto = new AccountLoginDto();
-        accountLoginDto.setUsername("viethoanrtweg0445");
+        accountLoginDto.setUsername("vieeg0445");
         accountLoginDto.setPassword("1234453");
         Credential credential = accoutService.login(accountLoginDto);
         System.out.println(credential.toString());
