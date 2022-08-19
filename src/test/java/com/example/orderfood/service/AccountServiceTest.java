@@ -35,10 +35,10 @@ class AccountServiceTest {
     @Test
     void register() {
         AccountRegisterDto accoutRegisterDto = new AccountRegisterDto();
-        accoutRegisterDto.setUsername("vieeg0445");
+        accoutRegisterDto.setUsername("viethoang");
         accoutRegisterDto.setPassword("1234453");
-        accoutRegisterDto.setEmail("ngov@gmail.com");
-        accoutRegisterDto.setPhone("0123456799");
+        accoutRegisterDto.setEmail("ngoviethoang@gmail.com");
+        accoutRegisterDto.setPhone("0345758659");
         accoutRegisterDto.setRole(1);
         Account afterCreate = null;
         try {

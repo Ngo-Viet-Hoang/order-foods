@@ -53,7 +53,7 @@ public class AccountService implements UserDetailsService {
 
     public Credential login(AccountLoginDto accountLoginDto) {
         Optional<Account> optionalAccount
-                = accountRepository.findAccountByUsername(accountLoginDto.getUsername());
+                = accountRepository.findByUsername(accountLoginDto.getUsername());
         if (!optionalAccount.isPresent()) {
             throw new UsernameNotFoundException("User is not found");
         }
@@ -84,7 +84,7 @@ public class AccountService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Account> optionalAccount = accountRepository.findAccountByUsername(username);
+        Optional<Account> optionalAccount = accountRepository.findByUsername(username);
         if (!optionalAccount.isPresent()) {
             throw new UsernameNotFoundException("Username is not found");
         }
