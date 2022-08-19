@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccountRepository extends JpaRepository<Account,Long> {
-    Optional<Account> findByUsername(String username);
-    List<Account> findAccountsByPhoneOrEmail(String phone, String email);
+    Optional<Account> findAccountByUsername(String username);
+    List<Account> findAccountsByPhoneOrEmailOrUsername(String phone, String email,String username);
 
 //    Optional<Account> findById(long ID);
 
