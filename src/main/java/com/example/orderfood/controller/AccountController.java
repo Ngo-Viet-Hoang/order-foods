@@ -29,11 +29,11 @@ public class AccountController {
     AccountRepository accountRepository;
 
     final PasswordEncoder passwordEncoder;
-    @RequestMapping(path = "register", method = RequestMethod.POST)
+    @RequestMapping(path = "/register", method = RequestMethod.POST)
     public ResponseEntity<?> register(@RequestBody @Valid AccountRegisterDto accountRegisterDto) throws Exception {
         return ResponseEntity.ok(accountService.register(accountRegisterDto));
     }
-    @RequestMapping(path = "login", method = RequestMethod.POST)
+    @RequestMapping(path = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody AccountLoginDto accountLoginDto){
         return ResponseEntity.ok(accountService.login(accountLoginDto));
     }
