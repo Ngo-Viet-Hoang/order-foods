@@ -175,12 +175,9 @@ public class OrderController {
         orderRepository.save(orderNew);
 //        telegramBotService.sendErrorToMe(order.getAccount().getUsername());
 //        telegramBotService.sendErrorToMe("https://order-foods.herokuapp.com/api/v1/foods/"+order.getId());
-        telegramBotService.sendErrorToMe( "Khach hang" + order.getFullName() +"voi so dien thoai " +order.getPhone() + "da dat mon "+
-                "https://order-foods.herokuapp.com/api/v1/orders/"+order.getId() + " kem thoe thong tin la" +
-                order.getNote()
-//                        + order.getTotalPrice()
-                        + order.getMealTime()
-//                        + order.getCreatedAt()
+        telegramBotService.sendErrorToMe(  order.getFullName() + " với số điện thoại: " +order.getPhone() + " đã đặt món "+
+                "https://order-foods.herokuapp.com/api/v1/orders/"+order.getId() + " kèm thông tin là " +
+                order.getNote() + " với thời gian ăn là vào lúc: "+ order.getMealTime()
         );
 
 

@@ -26,7 +26,7 @@ public class TelegramBotService {
 //     }
 
     public void sendErrorToMe(String message) {
-        sendMessage(adminTelegram + "", "Don hang vua duoc dat voi ma so la " +
+        sendMessage(adminTelegram + "", "Khách hàng " +
                 "" + message);
     }
 
