@@ -33,11 +33,5 @@ public class FoodService {
         foodRepository.deleteById(id);
     }
 
-    public void saveImage(MultipartFile image) throws Exception{
-        String folder = "/photos/";
-        byte[] bytes =  image.getBytes();
-        Path path = Paths.get(folder + image.getOriginalFilename());
-        Files.write(path,bytes);
-    }
 
 }
