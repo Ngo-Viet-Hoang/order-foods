@@ -43,11 +43,11 @@ public class AccountController {
     }
     @RequestMapping(path = "{id}",method = RequestMethod.GET)
     public ResponseEntity<?> getDetail(@PathVariable Long id) {
-        Optional<Account> optionalFood = accountService.findById(id);
-        if (!optionalFood.isPresent()) {
+        Optional<Account> optionalAccount = accountService.findById(id);
+        if (!optionalAccount.isPresent()) {
             ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(optionalFood.get());
+        return ResponseEntity.ok(optionalAccount.get());
     }
     @RequestMapping(path = "/list",method = RequestMethod.GET)
     public ResponseEntity<List<Account>> getList(){
@@ -106,4 +106,11 @@ public class AccountController {
         return ResponseEntity.ok(existAccount);
 
     }
+    @RequestMapping(method = RequestMethod.GET,path = "/profile")
+    public ResponseEntity<?> getProfile(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+       Optional<Account> account  = accountRepository.findById(Long.parseLong(principal.toString()));
+        return ResponseEntity.ok(account.get());
+    }
+
 }

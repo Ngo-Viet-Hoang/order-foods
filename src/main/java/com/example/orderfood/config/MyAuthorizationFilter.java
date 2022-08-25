@@ -11,7 +11,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -27,10 +29,20 @@ public class MyAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String requestPath = request.getServletPath();
+
+
+        System.out.println("requestPath: " + requestPath);
         if (Arrays.asList(IGNORE_PATHS).contains(requestPath)) {
             filterChain.doFilter(request, response);
             return;
         }
+
+        if (requestPath.equals("/api/v1/accounts/login")){
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
@@ -48,11 +60,7 @@ public class MyAuthorizationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             filterChain.doFilter(request, response);
         } catch (Exception ex) {
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            Map<String, String> errors = new HashMap<>();
-            errors.put("error", ex.getMessage());
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            response.getWriter().println(new Gson().toJson(errors));
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"token invalid");
         }
     }
 }
