@@ -14,4 +14,5 @@ public class Credential {
     private String refreshToken;
     private long expiredAt;
     private String scope;
+
 }

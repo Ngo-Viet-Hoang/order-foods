@@ -1,7 +1,7 @@
 package com.example.orderfood.entity.entityEnum;
 
-public enum OrderStatus {
-    PENDING(1), PROCESSING(0), DONE(-1), CANCEL(-2);
+public  enum OrderStatus {
+    PENDING(1),DONE(-1);
 
     private int value;
 
@@ -22,4 +22,7 @@ public enum OrderStatus {
         }
         return OrderStatus .PENDING;
     }
+
+
+
 }

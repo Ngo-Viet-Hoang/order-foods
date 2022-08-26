@@ -1,6 +1,6 @@
 package com.example.orderfood.service;
 
-import com.example.orderfood.entity.Firebase;
+import com.example.orderfood.entity.Note;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
@@ -17,12 +17,13 @@ public class FirebaseMessagingService {
     }
 
 
-    public String sendNotification(Firebase.Note note, String token) throws FirebaseMessagingException {
+    public String sendNotification(Note note, String token) throws FirebaseMessagingException {
 
         Notification notification = Notification
                 .builder()
                 .setTitle(note.getSubject())
                 .setBody(note.getContent())
+                .setImage(note.getImage())
                 .build();
 
         Message message = Message

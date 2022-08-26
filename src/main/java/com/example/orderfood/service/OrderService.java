@@ -2,17 +2,20 @@ package com.example.orderfood.service;
 
 import com.example.orderfood.entity.Food;
 import com.example.orderfood.entity.Order;
+import com.example.orderfood.entity.entityEnum.OrderStatus;
 import com.example.orderfood.entity.search.FilterParameter;
 import com.example.orderfood.entity.search.OrderSpecification;
 import com.example.orderfood.entity.search.SearchCriteria;
 import com.example.orderfood.entity.search.SearchCriteriaOperator;
 import com.example.orderfood.repository.OrderRepository;
+import com.example.orderfood.util.JwtUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.JoinColumn;
 import java.util.Optional;
 
 @Service
@@ -32,6 +35,12 @@ public class OrderService {
         return orderRepository.findAll(orderSpecification, pageRequest);
     }
 
+
+    public Page<Order> findByOrderStatus(int page, int limit, String status) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "createdAt");
+        PageRequest pageRequest = PageRequest.of(page - 1, limit, sort);
+        return orderRepository.findByOrderStatus(JwtUtil.searchEnum(OrderStatus.class,status), pageRequest);
+    }
     public Page<Order> findAll(FilterParameter param) {
         Specification<Order> specification = Specification.where(null);
         if (param.getKeyword() != null && param.getKeyword().length() > 0) {

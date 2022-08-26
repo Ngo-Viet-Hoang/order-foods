@@ -52,16 +52,16 @@ public class OrderSpecification implements Specification<Order> {
         Specification<Order> specification = Specification.where(null);
 
         SearchCriteria searchCriteria1 = new SearchCriteria(
-                "userId",
+                "orderStatus",
                 SearchCriteriaOperator.EQUALS,
-                "0");
+                1);
         OrderSpecification spec1 = new OrderSpecification(searchCriteria1);
         specification = specification.and(spec1);
 
         SearchCriteria searchCriteria2 = new SearchCriteria(
-                "status",
+                "fullName",
                 SearchCriteriaOperator.EQUALS,
-                2);
+                "Hoang");
         OrderSpecification spec2 = new OrderSpecification(searchCriteria2);
         specification = specification.and(spec2);
 

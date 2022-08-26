@@ -66,21 +66,22 @@ public class OrderController {
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "100") int limit,
             @RequestParam(defaultValue = "") String keyword,
-//            @RequestParam(defaultValue = "0") String userId,
-            @RequestParam(defaultValue = "") String status) {
+            @RequestParam(defaultValue = "0") String userId,
+            @RequestParam(required = false) String orderStatus) {
 
         Specification<Order> specification = Specification.where(null);
 
-        if (keyword != null && keyword.length() > 0) {
-            SearchCriteria searchCriteria
-                    = new SearchCriteria("keyword", SearchCriteriaOperator.JOIN, keyword);
-            OrderSpecification filter = new OrderSpecification(searchCriteria);
-            specification = specification.and(filter);
-        }
-        Page<Order> result = this.orderService.findAll(page, limit, specification);
-        List<Order> orderList = result.getContent();
+        if( orderStatus == null){
 
-        return ResponseEntity.ok().body(orderList);
+            Page<Order> result = this.orderService.findAll(page, limit, specification);
+            return ResponseEntity.ok().body(result);
+        }else {
+            Page<Order> result = this.orderService.findByOrderStatus(page, limit, orderStatus);
+            List<Order> orderList = result.getContent();
+            return ResponseEntity.ok().body(orderList);
+        }
+
+
     }
     @RequestMapping(method = RequestMethod.GET, path = "{id}")
     public ResponseEntity<?> getDetail(@PathVariable Long id) {
