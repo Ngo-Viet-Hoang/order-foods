@@ -1,16 +1,17 @@
 package com.example.orderfood.controller;
 
-import com.example.orderfood.entity.Category;
-import com.example.orderfood.entity.Food;
-import com.example.orderfood.entity.ResponseData;
+import com.example.orderfood.entity.*;
 import com.example.orderfood.entity.entityEnum.FoodStatus;
 import com.example.orderfood.repository.CategoryRepository;
+import com.example.orderfood.repository.FoodRepository;
+import com.example.orderfood.service.CategoryService;
 import com.example.orderfood.service.FoodService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,18 @@ public class FoodController {
     final FoodService foodService;
     @Autowired
     CategoryRepository categoryRepository;
+    @Autowired
+    CategoryService categoryService;
+    @Autowired
+    FoodRepository foodRepository;
+
+//    @RequestMapping(method = RequestMethod.GET,path = "category")
+//    public ResponseEntity<?> getByAccount(){
+//        Optional<Category> category = categoryService.findById();
+//        List<Food> foods = foodRepository.findByCategoryId(category.get().getId());
+//
+//        return ResponseEntity.ok(foods);
+//    }
 
     @RequestMapping(method = RequestMethod.GET, path = "{id}")
     public ResponseEntity<ResponseData> getDetail(@PathVariable Long id) {
