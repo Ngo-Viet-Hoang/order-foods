@@ -1,6 +1,7 @@
 package com.example.orderfood.controller;
 
 import com.example.orderfood.entity.*;
+import com.example.orderfood.entity.dto.ViewOrderDto;
 import com.example.orderfood.entity.reqBody.ReqFood;
 import com.example.orderfood.entity.reqBody.ReqOrder;
 import com.example.orderfood.entity.reqBody.ReqViewOrder;
@@ -57,18 +58,22 @@ public class ViewOrderController {
     public ResponseEntity<?> getByAccount(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<Account> account = accountRepository.findById(Long.parseLong(principal.toString()));
+        ViewOrderDto viewOrderDto = new ViewOrderDto();
         List<ViewOrder> viewOrders = viewOrderRepository.findByAccountId(account.get().getId());
+        viewOrderDto.setViewOrders(viewOrders);
+        viewOrderDto.calTotalPrice(viewOrders);
 
-        return ResponseEntity.ok(viewOrders);
+
+        return ResponseEntity.ok(viewOrderDto);
     }
-    @RequestMapping(method = RequestMethod.DELETE,path = "account")
-    public ResponseEntity<ResponseData> deleteByAccount(){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Optional<Account> account = accountRepository.findById(Long.parseLong(principal.toString()));
-        List<ViewOrder> viewOrders = viewOrderRepository.deleteByAccountId(account.get().getId());
-        ResponseData responseData = new ResponseData("Success",200,viewOrders);
-        return ResponseEntity.ok(responseData);
-    }
+//    @RequestMapping(method = RequestMethod.DELETE,path = "account")
+//    public ResponseEntity<ResponseData> deleteByAccount(){
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Optional<Account> account = accountRepository.findById(Long.parseLong(principal.toString()));
+//        List<ViewOrder> viewOrders = viewOrderRepository.deleteByAccountId(account.get().getId());
+//        ResponseData responseData = new ResponseData("Success",200,viewOrders);
+//        return ResponseEntity.ok(responseData);
+//    }
 
 
 
@@ -87,18 +92,17 @@ public class ViewOrderController {
         List<ViewOrder> list = new ArrayList<>();
         foods.forEach(e -> {
             Optional<Food> food = foodRepository.findById(e.getFoodId());
-//            if(account.isPresent()){
-//                account.get();
-//            }
-//            if(food.isPresent()){
-//                e.getFoodId();
-//            }
+            if(account.isPresent()){
+                account.get();
+            }
+            if(food.isPresent()){
+                e.getFoodId();
+            }
 
             ViewOrder order = new ViewOrder();
             order.setFood(food.get());
             order.setQuantity(e.getQuantity());
             order.setAccount(account.get());
-//            order.setTotalPrice(order.getTotalPrice());
             list.add(order);
         });
 

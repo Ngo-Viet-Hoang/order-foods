@@ -39,13 +39,13 @@ public class FoodController {
     @Autowired
     FoodRepository foodRepository;
 
-//    @RequestMapping(method = RequestMethod.GET,path = "category")
-//    public ResponseEntity<?> getByAccount(){
-//        Optional<Category> category = categoryService.findById();
-//        List<Food> foods = foodRepository.findByCategoryId(category.get().getId());
-//
-//        return ResponseEntity.ok(foods);
-//    }
+    @RequestMapping(method = RequestMethod.GET,path = "category/{id}")
+    public ResponseEntity<?> getByCategory(@PathVariable Long id){
+        Optional<Category> category = categoryService.findById(id);
+        List<Food> foods = foodRepository.findByCategoryId(category.get().getId());
+
+        return ResponseEntity.ok(foods);
+    }
 
     @RequestMapping(method = RequestMethod.GET, path = "{id}")
     public ResponseEntity<ResponseData> getDetail(@PathVariable Long id) {
