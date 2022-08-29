@@ -55,16 +55,15 @@ public class ViewOrderController {
         return ok(responseData);
     }
     @RequestMapping(method = RequestMethod.GET,path = "account")
-    public ResponseEntity<?> getByAccount(){
+    public ResponseEntity<ResponseData> getByAccount(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<Account> account = accountRepository.findById(Long.parseLong(principal.toString()));
         ViewOrderDto viewOrderDto = new ViewOrderDto();
         List<ViewOrder> viewOrders = viewOrderRepository.findByAccountId(account.get().getId());
         viewOrderDto.setViewOrders(viewOrders);
         viewOrderDto.calTotalPrice(viewOrders);
-
-
-        return ResponseEntity.ok(viewOrderDto);
+        ResponseData responseData = new ResponseData("Success",200,viewOrderDto);
+        return ResponseEntity.ok(responseData);
     }
 //    @RequestMapping(method = RequestMethod.DELETE,path = "account")
 //    public ResponseEntity<ResponseData> deleteByAccount(){

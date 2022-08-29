@@ -40,11 +40,15 @@ public class FoodController {
     FoodRepository foodRepository;
 
     @RequestMapping(method = RequestMethod.GET,path = "category/{id}")
-    public ResponseEntity<?> getByCategory(@PathVariable Long id){
+    public ResponseEntity<ResponseData> getByCategory(@PathVariable Long id){
         Optional<Category> category = categoryService.findById(id);
+        if(!category.isPresent()){
+            ResponseEntity.badRequest().build();
+        }
         List<Food> foods = foodRepository.findByCategoryId(category.get().getId());
+        ResponseData responseData = new ResponseData("Success",200,foods);
 
-        return ResponseEntity.ok(foods);
+        return ResponseEntity.ok(responseData);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "{id}")
