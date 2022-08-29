@@ -65,16 +65,6 @@ public class ViewOrderController {
         ResponseData responseData = new ResponseData("Success",200,viewOrderDto);
         return ResponseEntity.ok(responseData);
     }
-//    @RequestMapping(method = RequestMethod.DELETE,path = "account")
-//    public ResponseEntity<ResponseData> deleteByAccount(){
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Optional<Account> account = accountRepository.findById(Long.parseLong(principal.toString()));
-//        List<ViewOrder> viewOrders = viewOrderRepository.deleteByAccountId(account.get().getId());
-//        ResponseData responseData = new ResponseData("Success",200,viewOrders);
-//        return ResponseEntity.ok(responseData);
-//    }
-
-
 
     @RequestMapping(method = RequestMethod.GET, path = "{id}")
     public ResponseEntity<?> getDetail(@PathVariable Long id) {
@@ -104,11 +94,27 @@ public class ViewOrderController {
             order.setAccount(account.get());
             list.add(order);
         });
-
-
         ResponseData responseData = new ResponseData("Success",200,viewOrderRepository.saveAll(list));
         return ok(responseData);
     }
+    @RequestMapping(method = RequestMethod.DELETE,path = "delete/{id}")
+    public ResponseEntity<ResponseData> deleteByAccount(@PathVariable long id){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<Account> account = accountRepository.findById(Long.parseLong(principal.toString()));
+        viewOrderRepository.deleteByIdAndAccountId(id, account.get().getId());
+        ResponseData responseData = new ResponseData("Success",200,viewOrderRepository.findByAccountId(account.get().getId()));
+        return ResponseEntity.ok(responseData);
+    }
+//        @DeleteMapping( path = "{id}")
+//    public ResponseEntity<?> delete(@PathVariable Long id) {
+////            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+////        Optional<Account> account = accountRepository.findById(Long.parseLong(principal.toString()));
+//        if (!viewOrderRepository.findById(id).isPresent()) {
+//            ResponseEntity.badRequest().build();
+//        }
+//        viewOrderRepository.deleteById(id);
+//        return ResponseEntity.ok().build();
+//    }
 
 
     }

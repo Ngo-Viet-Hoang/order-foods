@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "view-orders")
+@Table(name = "view_orders")
 public class ViewOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
